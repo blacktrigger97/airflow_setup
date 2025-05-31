@@ -9,8 +9,7 @@ from datetime import datetime
     tags=['stock_market_status']
 )
 
-def taskflow():
+def stock_market():
+    pass
 
-    @task
-    def task_a():
-        
+stock_market()

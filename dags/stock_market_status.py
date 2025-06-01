@@ -11,7 +11,7 @@ def _task_a():
 @dag(
     start_date=datetime(2025,6,1),
     schedule='@daily',
-    cathup=False,
+    catchup=False,
     tags=['stock_market_status']
 )
 

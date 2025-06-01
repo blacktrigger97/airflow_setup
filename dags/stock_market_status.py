@@ -1,9 +1,8 @@
 from airflow.decorators import dag, task
-from airflow.operators.python import PythonOperator
 from datetime import datetime
 
 
-def _task_a():
+def task_a():
     print("Task A")
     return 42
 

@@ -2,11 +2,6 @@ from airflow.decorators import dag, task
 from datetime import datetime
 
 
-def task_a():
-    print("Task A")
-    return 42
-
-
 @dag(
     start_date=datetime(2025,6,1),
     schedule='@daily',

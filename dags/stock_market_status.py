@@ -1,15 +1,33 @@
 from airflow.decorators import dag, task
+from airflow.operators.python import PythonOperator
 from datetime import datetime
 
 
+def _task_a():
+    print("Task A")
+    return 42
+
+
 @dag(
-    start_date=datetime(2025,5,31),
+    start_date=datetime(2025,6,1),
     schedule='@daily',
     cathup=False,
     tags=['stock_market_status']
 )
 
 def stock_market():
-    pass
+    
+    @task
+    def task_a():
+        print("Task A")
+        return 42
 
-stock_market()
+    @task
+    def task_b(value):
+        print("Task B")
+        print(value)
+
+
+    task_b(task_a())
+
+stock_market() 

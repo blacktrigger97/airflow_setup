@@ -5,8 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "apache-airflow-providers-apache-spark>=5.3.0",
-    "apache-airflow[celery,rabbitmq]==2.10.5",
+    "apache-airflow[redis,celery,postgres,spark,kafka,client,hdfs]==3.0.1",
     "psycopg2>=2.9.10",
     "pynessie>=0.67.0",
     "pyspark==3.5.5",

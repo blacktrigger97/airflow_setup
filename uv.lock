@@ -53,7 +53,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "apache-airflow", extras = ["redis", "celery", "postgres", "spark", "kafka", "client", "hdfs"], specifier = "==3.0.1" },
+    { name = "apache-airflow", extras = ["redis", "celery", "postgres"], specifier = "==3.0.1" },
     { name = "psycopg2", specifier = ">=2.9.10" },
     { name = "pynessie", specifier = ">=0.67.0" },
     { name = "pyspark", specifier = "==3.5.5" },

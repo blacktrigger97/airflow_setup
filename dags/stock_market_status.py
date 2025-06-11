@@ -1,6 +1,7 @@
 from airflow.decorators import dag, task
 from airflow.hooks.base import BaseHook
 from airflow.sensors.base import PokeReturnValue
+from airflow.operators.python import PythonOperator
 from datetime import datetime
 import requests
 
@@ -23,4 +24,6 @@ def stock_market():
         condition = response.json()['finance']['result'] is None
         return PokeReturnValue(is_done=condition)
 
+    is_api_available()
+    
 stock_market() 

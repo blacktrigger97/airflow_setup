@@ -15,7 +15,7 @@ import requests
 
 def stock_market():
     
-    @task.sensor(poke_interval=5, timeout=None, mode='poke')
+    @task.sensor(poke_interval=5, timeout=300, mode='poke')
     def is_api_available() -> PokeReturnValue:
         api = BaseHook.get_connection('stock_api')
         url = f"{api.host}{api.extra_dejson['endpoint']}"
@@ -25,5 +25,5 @@ def stock_market():
         return PokeReturnValue(is_done=condition)
 
     is_api_available()
-    
+
 stock_market() 

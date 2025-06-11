@@ -6,7 +6,7 @@ import requests
 
 
 @dag(
-    start_date=datetime(2025,6,1),
+    start_date=datetime(2025,6,11),
     schedule='@daily',
     catchup=False,
     tags=['stock_market']

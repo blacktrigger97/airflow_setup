@@ -21,8 +21,11 @@ def stock_market():
         url = f"{api.host}{api.extra_dejson['endpoint']}"
         print(url)
         response = requests.get(url, headers=api.extra_dejson['headers'])
-        condition = response.json()['finance']['result'] is None
+        condition = response.json()['finance']['result'] is not None
         return PokeReturnValue(is_done=condition)
+
+    
+
 
     is_api_available()
 

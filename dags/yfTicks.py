@@ -25,12 +25,15 @@ with DAG(
         print(f"pystrm version: {pystrm.__version__}")
         # ... your task logic here ...
 
-        PythonOperator(dag=dag,
+        fastInfo = PythonOperator(dag=dag,
                task_id='fastInfo',
                provide_context=False,
                python_callable=pystrm,
                op_args=['liveYfinanaceTick', 'Yfinance.FastInfo'],
             #    op_kwargs={'keyword_argument':'which will be passed to function'}
                )
-
+        
+        fastInfo
     my_isolated_task()
+
+

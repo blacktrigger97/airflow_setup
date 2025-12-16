@@ -1,16 +1,11 @@
 from __future__ import annotations
 import sys
-from airflow.decorators import task
-from airflow.models.dag import DAG
+from airflow.decorators import task, dag
 from airflow.operators.python import PythonOperator
 from datetime import datetime
 
-with DAG(
-    dag_id="yfTicks",
-    start_date=datetime(2025, 12, 16),
-    schedule=None,
-    catchup=False,
-) as dag:
+@dag(schedule_interval=None, start_date=datetime(2025, 12, 16), catchup=False)
+def install_and_use_module_dag():
 
     @task.virtualenv(
         task_id="Ticks",
@@ -26,14 +21,14 @@ with DAG(
         # ... your task logic here ...
 
         fastInfo = PythonOperator(dag=dag,
-               task_id='fastInfo',
-               provide_context=False,
-               python_callable=pystrm,
-               op_args=['liveYfinanaceTick', 'Yfinance.FastInfo'],
+                task_id='fastInfo',
+                provide_context=False,
+                python_callable=pystrm,
+                op_args=['liveYfinanaceTick', 'Yfinance.FastInfo'],
             #    op_kwargs={'keyword_argument':'which will be passed to function'}
-               )
+                )
         
-        fastInfo
     my_isolated_task()
 
+install_and_use_module_dag = install_and_use_module_dag()
 

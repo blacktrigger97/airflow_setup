@@ -1,6 +1,7 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
+from datetime import datetime
 import platform
 import logging
 
@@ -12,7 +13,7 @@ def print_worker_hostname():
 
 with DAG(
     dag_id='celery_worker_test',
-    start_date=days_ago(1),
+    start_date=datetime(2025,12,17),
     schedule_interval=None,  # Run manually
     catchup=False,
     tags=['test', 'celery']

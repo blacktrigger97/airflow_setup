@@ -14,7 +14,7 @@ def print_worker_hostname():
 with DAG(
     dag_id='celery_worker_test',
     start_date=datetime(2025,12,17),
-    schedule_interval=None,  # Run manually
+    schedule=None,  # Run manually
     catchup=False,
     tags=['test', 'celery']
 ) as dag:

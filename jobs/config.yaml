@@ -38,7 +38,7 @@ Logging:
       class: pystrm.utils.logger.QueueListenerHandler.QueueListenerHandler
       handlers:
         - cfg://handlers.console
-        - cfg://handlers.file_json
+        # - cfg://handlers.file_json
         - cfg://handlers.psgdb
   root:
     level: NOTSET

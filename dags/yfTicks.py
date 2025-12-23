@@ -5,7 +5,6 @@ from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonOperator
 from datetime import datetime
 from chngdir import dir_chng
-from pystrmMain import main
 
 @dag(schedule=None, start_date=datetime(2025, 12, 16), catchup=False)
 def install_and_use_module_dag():
@@ -20,6 +19,7 @@ def install_and_use_module_dag():
     def my_isolated_task():
         # This code runs inside the new virtual environment
         import pystrm
+        from pystrm.main import main_function
 
         print(f"Python version in venv: {sys.version}")
         print(f"pystrm version: {pystrm.__version__}")
@@ -28,7 +28,7 @@ def install_and_use_module_dag():
         fastInfo = PythonOperator(dag=dag,
                 task_id='fastInfo',
                 provide_context=False,
-                python_callable=main,
+                python_callable=main_function,
                 op_args=['liveYfinanaceTick', 'Yfinance.FastInfo'],
             #    op_kwargs={'keyword_argument':'which will be passed to function'}
                 )

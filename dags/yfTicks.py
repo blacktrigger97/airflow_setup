@@ -1,7 +1,7 @@
 from __future__ import annotations
 import sys
-from airflow.decorators import task, dag
-from airflow.operators.python import PythonOperator
+from airflow.sdk import task, dag
+from airflow.providers.standard.operators.python import PythonOperator
 from datetime import datetime
 
 @dag(schedule=None, start_date=datetime(2025, 12, 16), catchup=False)

@@ -6,7 +6,7 @@ from airflow.providers.standard.operators.python import PythonOperator
 from datetime import datetime
 from chngdir import dir_chng
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'jobs')))
+sys.path.append(os.path.abspath('/root/airflow/jobs'))
 
 from jobs.pystrmMain import main
 

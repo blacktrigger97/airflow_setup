@@ -1,0 +1,12 @@
+{
+    "title": "FastInfo",
+    "type": "object",
+    "properties": {
+        "exchange": {"type": "string"},
+        "fiftydayaverage": {"type": "number"},
+        "lastprice": {"type": "number"},
+        "lastvolume": {"type": "integer"}
+    },
+    "required": ["exchange", "fiftydayaverage", "lastprice", "lastvolume"],
+    "additionalProperties": true
+}

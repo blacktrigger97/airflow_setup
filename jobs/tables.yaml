@@ -1,0 +1,69 @@
+JugaadData:
+  Info:
+    ldt: info
+    type: NonStream
+    partition: False
+
+  MetaData:
+    ldt: meta
+    type: NonStream
+    partition: False
+
+  SecurityInfo:
+    ldt: security
+    type: NonStream
+    partition: False
+
+  IndustryInfo:
+    ldt: indusinfo
+    type: NonStream
+    partition: False
+
+  PriceInfo:
+    ldt: price
+    type: Streaming
+    partition: True
+    partcols: symbol,year,month,day
+
+  PreOpenMarket:
+    ldt: preopenmar
+    type: Streaming
+    partition: False
+
+  MarketState:
+    ldt: marketState
+    type: NonStream
+    partition: False
+
+  MarketCap:
+    ldt: marketcap
+    type: NonStream
+    partition: False
+
+  IndicativeNifty50:
+    ldt: indicativenifty50
+    type: NonStream
+    partition: False
+
+  TickData:
+    ldt: liveData
+    type: NonStream
+    partition: True
+    partcols: symbol,year,month,day
+
+Yfinance:
+  Info:
+    ldt: tick
+    type: NonStream
+    partition: False
+
+  FastInfo:
+    ldt: fastinfo
+    type: Streaming
+    schema_type: AVRO
+    infolst:
+      - exchange
+      - fiftyDayAverage
+      - lastPrice
+      - lastVolume
+    partition: False

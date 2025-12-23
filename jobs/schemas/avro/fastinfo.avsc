@@ -1,0 +1,10 @@
+{
+    "type" : "record",
+    "name" : "fastinfo",
+    "fields" : [ 
+        {"name" : "exchange", "type" : "string"}, 
+        {"name" : "fiftydayaverage", "type" : "double"},
+        {"name" : "lastprice", "type" : "double"}, 
+        {"name" : "lastvolume", "type" : "long"} 
+    ]
+}

@@ -1,9 +1,13 @@
 from __future__ import annotations
+import os
 import sys
 from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonOperator
 from datetime import datetime
 from chngdir import dir_chng
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'jobs')))
+
 from jobs.pystrmMain import main
 
 @dag(schedule=None, start_date=datetime(2025, 12, 16), catchup=False)

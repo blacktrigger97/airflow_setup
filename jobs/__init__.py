@@ -1,3 +1,3 @@
-from pystrmMain import main
+from dags.pystrmMain import main
 
 __all__ = ("main",)

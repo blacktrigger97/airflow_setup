@@ -4,7 +4,7 @@ from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonOperator
 from datetime import datetime
 from chngdir import dir_chng
-from jobs.main import main
+from jobs.pystrmMain import main
 
 @dag(schedule=None, start_date=datetime(2025, 12, 16), catchup=False)
 def install_and_use_module_dag():

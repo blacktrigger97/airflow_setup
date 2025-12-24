@@ -13,7 +13,7 @@ def install_and_use_module_dag():
 
     @task.virtualenv(
         task_id="Ticks",
-        requirements=["apache-airflow==3.1.5","pystrm"], # Specify packages and versions
+        requirements=["pystrm"], # Specify packages and versions
         system_site_packages=False, # Set to True to access system packages (including Airflow)
     )
     def my_isolated_task():

@@ -10,8 +10,6 @@ from chngdir import dir_chng
 @dag(schedule=None, start_date=datetime(2025, 12, 16), catchup=False)
 def install_and_use_module_dag():
 
-    dir_chng()
-
     # fastInfo = PythonVirtualenvOperator(
     #     task_id="fastInfo",
     #     python_callable=main_function,
@@ -35,6 +33,8 @@ def install_and_use_module_dag():
         # This code runs inside the new virtual environment
         import pystrm
         from pystrm import main_function
+
+        dir_chng()
 
         print(f"Python version in venv: {sys.version}")
         print(f"pystrm version: {pystrm.__version__}")

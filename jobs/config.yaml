@@ -80,8 +80,8 @@ Kafka:
   kafka-schema-client-conf:
     url: http://kafka-sr.bdc.home:8081
   schema:
-    avro: schemas/avro/
-    json: schemas/json/
+    avro: /schemas/avro/
+    json: /schemas/json/
 
 SparkParam:
   master: spark://sm.bdc.home:7077

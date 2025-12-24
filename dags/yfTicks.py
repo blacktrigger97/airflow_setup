@@ -30,13 +30,12 @@ def install_and_use_module_dag():
     )
     def isolated_tick_task(mthd: str, key: str):
         # This code runs inside the new virtual environment
-        from chngdir import dir_chng
+        import os
+
+        print(f"current directory: {os.getcwd()}")
         
         import pystrm
         from pystrm import main_function
-
-
-        dir_chng()
 
         print(f"Python version in venv: {sys.version}")
         print(f"pystrm version: {pystrm.__version__}")

@@ -19,7 +19,7 @@ def install_and_use_module_dag():
     def my_isolated_task():
         # This code runs inside the new virtual environment
         import pystrm
-        from pystrm.main import main_function
+        from pystrm import main_function
 
         print(f"Python version in venv: {sys.version}")
         print(f"pystrm version: {pystrm.__version__}")

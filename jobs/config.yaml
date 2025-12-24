@@ -25,12 +25,12 @@ Logging:
       level: INFO
       formatter: simple
       stream: ext://sys.stdout
-    file_json:
-      class: logging.handlers.RotatingFileHandler
-      level: WARN
-      formatter: json
-      maxBytes: 104857600
-      filename: logs/
+    # file_json:
+    #   class: logging.handlers.RotatingFileHandler
+    #   level: WARN
+    #   formatter: json
+    #   maxBytes: 104857600
+    #   filename: logs/
     psgdb:
       class: pystrm.utils.logger.psgLogging.CustomHandler
       level: ERROR

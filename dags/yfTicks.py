@@ -10,19 +10,6 @@ def install_and_use_module_dag():
 
     jobdir_chng()
 
-    # fastInfo = PythonVirtualenvOperator(
-    #     task_id="fastInfo",
-    #     python_callable=main_function,
-    #     requirements=[
-    #         "pystrm",
-    #         "dill"
-    #     ],
-    #     system_site_packages=False,
-    #     inherit_env=True,
-    #     serializer="dill",
-    #     op_args=['liveYfinanaceTick', 'Yfinance.FastInfo'],
-    # )
-
     @task.virtualenv(
         task_id="Ticks",
         system_site_packages=False, # Set to True to access system packages (including Airflow)
@@ -31,10 +18,6 @@ def install_and_use_module_dag():
     )
     def isolated_tick_task(mthd: str, key: str):
         # This code runs inside the new virtual environment
-        # import os
-
-        # os.chdir("/root/airflow/jobs")
-        # print(f"current directory: {os.getcwd()}")
         
         import pystrm
         from pystrm import main_function

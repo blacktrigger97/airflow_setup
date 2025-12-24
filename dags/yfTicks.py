@@ -1,5 +1,4 @@
 from __future__ import annotations
-import os
 import sys
 from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonOperator

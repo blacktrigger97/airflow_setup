@@ -1,8 +1,8 @@
 from __future__ import annotations
 import sys
 from airflow.sdk import task, dag
-# from airflow.providers.standard.operators.python import PythonOperator
-from airflow.providers.standard.utils import python_virtualenv
+from airflow.providers.standard.operators.python import PythonOperator, PythonVirtualenvOperator
+# from airflow.providers.standard.utils import python_virtualenv
 from datetime import datetime
 from chngdir import dir_chng
 
@@ -39,7 +39,7 @@ def install_and_use_module_dag():
         print(f"pystrm version: {pystrm.__version__}")
         # ... your task logic here ...
 
-        fastInfo = python_virtualenv(dag=dag,
+        fastInfo = PythonVirtualenvOperator(dag=dag,
                 task_id='fastInfo',
                 provide_context=False,
                 python_callable=main_function,

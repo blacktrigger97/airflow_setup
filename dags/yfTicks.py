@@ -27,9 +27,8 @@ def install_and_use_module_dag():
 
     @task.virtualenv(
         task_id="Ticks",
-        requirements=["pystrm", "dill"], # Specify packages and versions
-        system_site_packages=False, # Set to True to access system packages (including Airflow)
-        inherit_env=True
+        requirements=["pystrm"], # Specify packages and versions
+        system_site_packages=True, # Set to True to access system packages (including Airflow)
     )
     def my_isolated_task():
         # This code runs inside the new virtual environment

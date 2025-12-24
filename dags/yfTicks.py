@@ -4,7 +4,6 @@ from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonOperator, PythonVirtualenvOperator
 # from airflow.providers.standard.utils import python_virtualenv
 from datetime import datetime
-from chngdir import dir_chng
 
 
 @dag(schedule=None, start_date=datetime(2025, 12, 16), catchup=False)
@@ -31,8 +30,11 @@ def install_and_use_module_dag():
     )
     def isolated_tick_task(mthd: str, key: str):
         # This code runs inside the new virtual environment
+        from chngdir import dir_chng
+        
         import pystrm
         from pystrm import main_function
+
 
         dir_chng()
 

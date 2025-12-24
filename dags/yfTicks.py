@@ -32,6 +32,7 @@ def install_and_use_module_dag():
         # This code runs inside the new virtual environment
         import os
 
+        os.chdir("/root/airflow/jobs")
         print(f"current directory: {os.getcwd()}")
         
         import pystrm

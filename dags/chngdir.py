@@ -1,6 +1,6 @@
 import os
 
-def dir_chng(path: str = "/root/airflow/jobs"):
+def jobdir_chng(path: str = "/root/airflow/jobs"):
 
     
     if not os.path.exists(path):

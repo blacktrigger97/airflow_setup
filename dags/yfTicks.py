@@ -1,13 +1,14 @@
 from __future__ import annotations
 import sys
 from airflow.sdk import task, dag
-from airflow.providers.standard.operators.python import PythonOperator, PythonVirtualenvOperator
-# from airflow.providers.standard.utils import python_virtualenv
 from datetime import datetime
+from chngdir import jobdir_chng
 
 
 @dag(schedule=None, start_date=datetime(2025, 12, 16), catchup=False)
 def install_and_use_module_dag():
+
+    jobdir_chng()
 
     # fastInfo = PythonVirtualenvOperator(
     #     task_id="fastInfo",
@@ -30,10 +31,10 @@ def install_and_use_module_dag():
     )
     def isolated_tick_task(mthd: str, key: str):
         # This code runs inside the new virtual environment
-        import os
+        # import os
 
-        os.chdir("/root/airflow/jobs")
-        print(f"current directory: {os.getcwd()}")
+        # os.chdir("/root/airflow/jobs")
+        # print(f"current directory: {os.getcwd()}")
         
         import pystrm
         from pystrm import main_function

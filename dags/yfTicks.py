@@ -42,6 +42,6 @@ def install_and_use_module_dag():
 
         return main_function(mthd, key)
 
-    isolated_tick_task()
+    isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo')
 
 install_and_use_module_dag()

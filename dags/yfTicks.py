@@ -2,7 +2,7 @@ from __future__ import annotations
 import sys
 from airflow.sdk import task, dag
 from datetime import datetime
-from chngdir import jobdir_chng
+from utils import jobdir_chng
 
 
 @dag(schedule=None, start_date=datetime(2025, 12, 16), catchup=False)

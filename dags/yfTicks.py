@@ -68,7 +68,8 @@ def install_and_use_module_dag():
     fastInfo = PythonVirtualenvOperator(
         task_id='Ticks_FastInfo',
         python_callable=isolated_tick_task,
-        requirements=['some_python_package'],
+        system_site_packages=False,
+        requirements=['pystrm'],
         op_kwargs={
             "mthd" : "liveYfinanaceTick",
             "key" : 'Yfinance.FastInfo',

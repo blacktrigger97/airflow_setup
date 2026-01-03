@@ -1,6 +1,5 @@
 from __future__ import annotations
 import sys
-# import pandas_market_calendars as mcal
 from datetime import datetime
 from time import sleep
 from utils import jobdir_chng
@@ -14,12 +13,7 @@ def install_and_use_module_dag():
 
     jobdir_chng()
     
-    @task.virtualenv(
-        task_id="mStatus",
-        system_site_packages=False, # Set to True to access system packages (including Airflow)
-        requirements=["pandas_market_calendars"], # Specify packages and versions
-        # inherit_env=True
-    )
+    @task
     def mStatus(**context):
 
         import pandas_market_calendars as mcal
@@ -45,6 +39,9 @@ def install_and_use_module_dag():
             runCheck["run_flag"] = True
         
         context["ti"].xcom_push(key="run_flag", value=runCheck["run_flag"])
+        return runCheck["run_flag"]
+
+
 
 
     @task.virtualenv(

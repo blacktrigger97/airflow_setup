@@ -78,7 +78,7 @@ def install_and_use_module_dag():
                 trigger_rule='all_success' # Default behavior
             )
 
-        
+            trigger_next_run
         return None
 
 

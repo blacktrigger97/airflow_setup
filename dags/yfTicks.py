@@ -43,7 +43,7 @@ def install_and_use_module_dag():
         context["ti"].xcom_push(key="run_flag", value=runCheck["run_flag"])
 
 
-    def isolated_tick_task(mthd: str, key: str, fetch_runflag):
+    def isolated_tick_task(mthd: str, key: str, fetch_runflag: str):
         # This code runs inside the new virtual environment
 
         try:

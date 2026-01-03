@@ -15,7 +15,7 @@ def install_and_use_module_dag():
     jobdir_chng()
     
     @task(task_id='mStatus')
-    def mStatus() -> dict[str, bool]:
+    def mStatus():
 
         # Create the NSE calendar
         nse_calendar = mcal.get_calendar('XNSE')

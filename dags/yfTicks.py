@@ -34,7 +34,7 @@ def install_and_use_module_dag():
             schedule = nse_calendar.schedule(start_date=today, end_date=today, tz='Asia/Kolkata')
         
             while (datetime.now() <= schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None)) \
-                and (int((schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None) - datetime.now()).total_seconds()) <= 300):
+                and (int((schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None) - datetime.now()).total_seconds()) > 300):
                 sleep(1)
                 continue
             

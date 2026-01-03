@@ -87,9 +87,6 @@ def install_and_use_module_dag():
             trigger_next_run = TriggerDagRunOperator(
                 task_id='rerun',
                 trigger_dag_id='yfTicks',
-                # conf="{{ runStatus.xcom_pull(task_ids='mStatus', key='return_value') }}",
-                # only_if_dag_run_exists=True, # Use if you want to reuse existing runs
-                # wait_for_completion=True, # Use if the current DAG should wait for the new one
                 trigger_rule='all_success' # Default behavior
             )
 

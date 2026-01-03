@@ -1,5 +1,6 @@
 from __future__ import annotations
 import sys
+from ast import literal_eval
 from datetime import datetime
 from time import sleep
 from utils import jobdir_chng
@@ -43,19 +44,17 @@ def install_and_use_module_dag():
         return runCheck["run_flag"]
 
 
-
-
-    # @task.virtualenv(
-    #     task_id="Ticks_FastInfo",
-    #     system_site_packages=False, # Set to True to access system packages (including Airflow)
-    #     requirements=["pystrm"] # Specify packages and versions
-    # )
     def isolated_tick_task(mthd: str, key: str, fetch_runflag):
         # This code runs inside the new virtual environment
 
-        # fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="run_flag")
-        print(f"fetch_runflag : {fetch_runflag} Type : {type(fetch_runflag)}")
-        if fetch_runflag == "True":
+        try:
+            flag = literal_eval(fetch_runflag)
+            # result is False and has type <class 'bool'>
+        except (ValueError, SyntaxError):
+            # Handle cases where the string isn't a valid Python literal
+            print(f"Error: '{fetch_runflag}' is not a valid Python literal")
+
+        if flag:
             import pystrm # type: ignore 
             from pystrm import main_function # type: ignore 
 
@@ -96,7 +95,6 @@ def install_and_use_module_dag():
 
             trigger_next_run
 
-    #runStatus = mStatus()
     mStatus() >> fastInfo >> reRunDag()
     
 install_and_use_module_dag()

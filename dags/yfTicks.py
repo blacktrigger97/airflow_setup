@@ -48,12 +48,14 @@ def install_and_use_module_dag():
         task_id="Ticks_FastInfo",
         system_site_packages=False, # Set to True to access system packages (including Airflow)
         requirements=["pystrm"], # Specify packages and versions
-        inherit_env=True
+        op_kwargs={
+        "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
+        }
     )
-    def isolated_tick_task(mthd: str, key: str, **context):
+    def isolated_tick_task(mthd: str, key: str, fetch_runflag: bool):
         # This code runs inside the new virtual environment
 
-        fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="run_flag")
+        # fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="run_flag")
         
         if fetch_runflag:
             import pystrm # type: ignore 

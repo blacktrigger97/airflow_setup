@@ -17,7 +17,7 @@ def install_and_use_module_dag():
 
     jobdir_chng()
     
-    @task
+    @task(task_id='mStatus')
     def mStatus() -> dict[str, bool]:
         
         runCheck = {"run_flag" : False}
@@ -45,10 +45,10 @@ def install_and_use_module_dag():
         requirements=["pystrm"], # Specify packages and versions
         inherit_env=True
     )
-    def isolated_tick_task(mthd: str, key: str, ti=None) -> None:
+    def isolated_tick_task(mthd: str, key: str, **context) -> None:
         # This code runs inside the new virtual environment
 
-        fetch_runflag = ti.xcom_pull(task_ids="mStatus")
+        fetch_runflag = context['ti'].xcom_pull(task_ids="mStatus")
         
         if fetch_runflag["run_flag"]:
             import pystrm # type: ignore 
@@ -64,9 +64,9 @@ def install_and_use_module_dag():
 
 
     @task
-    def reRunDag(ti=None) -> None:
+    def reRunDag(**context) -> None:
 
-        fetch_runflag = ti.xcom_pull(task_ids="mStatus")
+        fetch_runflag = context['ti'].xcom_pull(task_ids="mStatus")
 
         if fetch_runflag["run_flag"]:
             trigger_next_run = TriggerDagRunOperator(

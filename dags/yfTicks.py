@@ -86,7 +86,7 @@ def install_and_use_module_dag():
 
             trigger_next_run
 
-    runStatus = mStatus()
-    isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo', runStatus) >> reRunDag(runStatus)
+    # runStatus = mStatus()
+    mStatus() >> isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo') >> reRunDag()
     
 install_and_use_module_dag()

@@ -9,7 +9,7 @@ from airflow.sdk import task, dag
 from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
 
-@dag(dag_id="yfTicks", schedule='@daily', start_date=datetime(2026, 1, 5), catchup=False)
+@dag(dag_id="yfTicks", schedule='@daily', start_date=datetime(2026, 1, 3), catchup=False)
 def install_and_use_module_dag():
 
     jobdir_chng()

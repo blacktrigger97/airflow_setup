@@ -66,7 +66,7 @@ def install_and_use_module_dag():
             return main_function(mthd, key)
         
     fastInfo = PythonVirtualenvOperator(
-        task_id='puller_task_venv',
+        task_id='Ticks_FastInfo',
         python_callable=isolated_tick_task,
         requirements=['some_python_package'],
         op_kwargs={

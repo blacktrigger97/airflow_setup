@@ -50,12 +50,12 @@ def install_and_use_module_dag():
     #     system_site_packages=False, # Set to True to access system packages (including Airflow)
     #     requirements=["pystrm"] # Specify packages and versions
     # )
-    def isolated_tick_task(mthd: str, key: str, fetch_runflag: bool):
+    def isolated_tick_task(mthd: str, key: str, fetch_runflag):
         # This code runs inside the new virtual environment
 
         # fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="run_flag")
-        
-        if fetch_runflag:
+        print(f"fetch_runflag : {fetch_runflag} Type : {type(fetch_runflag)}")
+        if fetch_runflag == "True":
             import pystrm # type: ignore 
             from pystrm import main_function # type: ignore 
 

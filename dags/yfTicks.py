@@ -1,6 +1,5 @@
 from __future__ import annotations
 import sys
-from ast import literal_eval
 from datetime import datetime
 from time import sleep
 from utils import jobdir_chng
@@ -45,6 +44,8 @@ def install_and_use_module_dag():
 
     def isolated_tick_task(mthd: str, key: str, fetch_runflag: str):
         # This code runs inside the new virtual environment
+
+        from ast import literal_eval
 
         try:
             flag = literal_eval(fetch_runflag)

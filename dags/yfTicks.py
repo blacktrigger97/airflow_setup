@@ -1,16 +1,18 @@
 from __future__ import annotations
 import sys
 import pandas_market_calendars as mcal
-from airflow.sdk import task, dag
 from datetime import datetime, date
 from time import sleep
 from utils import jobdir_chng
+
+from airflow.sdk import task, dag
+from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
 
 # Create the NSE calendar
 nse_calendar = mcal.get_calendar('XNSE')
 
-@dag(schedule=None, start_date=datetime(2026, 1, 5), catchup=False)
+@dag(dag_id="yfTicks", schedule=None, start_date=datetime(2026, 1, 5), catchup=False)
 def install_and_use_module_dag():
 
     jobdir_chng()
@@ -43,7 +45,7 @@ def install_and_use_module_dag():
         requirements=["pystrm"], # Specify packages and versions
         inherit_env=True
     )
-    def isolated_tick_task(ti, mthd: str, key: str) -> None:
+    def isolated_tick_task(mthd: str, key: str, ti=None) -> None:
         # This code runs inside the new virtual environment
 
         fetch_runflag = ti.xcom_pull(task_ids="mStatus", key="return_value")
@@ -60,7 +62,27 @@ def install_and_use_module_dag():
         else:
             return None
 
-    runStatus = mStatus()
-    isolated_tick_task(runStatus, 'liveYfinanaceTick', 'Yfinance.FastInfo')
 
+    @task
+    def reRunDag(ti=None) -> None:
+
+        fetch_runflag = ti.xcom_pull(task_ids="mStatus", key="return_value")
+
+        if fetch_runflag["run_flag"]:
+            trigger_next_run = TriggerDagRunOperator(
+                task_id='rerun',
+                trigger_dag_id='yfTicks',
+                # conf="{{ runStatus.xcom_pull(task_ids='mStatus', key='return_value') }}",
+                # only_if_dag_run_exists=True, # Use if you want to reuse existing runs
+                # wait_for_completion=True, # Use if the current DAG should wait for the new one
+                trigger_rule='all_success' # Default behavior
+            )
+
+        
+        return None
+
+
+    runStatus = mStatus()
+    isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo', runStatus) >> reRunDag(runStatus)
+    
 install_and_use_module_dag()

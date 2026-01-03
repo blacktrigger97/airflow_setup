@@ -20,7 +20,7 @@ def install_and_use_module_dag():
         requirements=["pandas_market_calendars"], # Specify packages and versions
         # inherit_env=True
     )
-    def mStatus():
+    def mStatus(**context):
 
         import pandas_market_calendars as mcal
         from datetime import datetime, date
@@ -44,7 +44,7 @@ def install_and_use_module_dag():
             
             runCheck["run_flag"] = True
         
-        return runCheck
+        context["ti"].xcom_push(key="run_flag", value=runCheck["run_flag"])
 
 
     @task.virtualenv(
@@ -53,12 +53,12 @@ def install_and_use_module_dag():
         requirements=["pystrm"], # Specify packages and versions
         inherit_env=True
     )
-    def isolated_tick_task(mthd: str, key: str, ti=None):
+    def isolated_tick_task(mthd: str, key: str, **context):
         # This code runs inside the new virtual environment
 
-        fetch_runflag = ti.xcom_pull(task_ids="mStatus", key='return_value')
+        fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="run_flag")
         
-        if fetch_runflag["run_flag"]:
+        if fetch_runflag:
             import pystrm # type: ignore 
             from pystrm import main_function # type: ignore 
 
@@ -70,11 +70,11 @@ def install_and_use_module_dag():
 
 
     @task
-    def reRunDag(ti=None):
+    def reRunDag(**context):
 
-        fetch_runflag = ti.xcom_pull(task_ids="mStatus", key='return_value')
+        fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="run_flag")
 
-        if fetch_runflag["run_flag"]:
+        if fetch_runflag:
             trigger_next_run = TriggerDagRunOperator(
                 task_id='rerun',
                 trigger_dag_id='yfTicks',
@@ -86,7 +86,7 @@ def install_and_use_module_dag():
 
             trigger_next_run
 
-    runStatus = mStatus()
-    isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo', runStatus) >> reRunDag(runStatus)
+    # runStatus = mStatus()
+    isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo', mStatus()) >> reRunDag(mStatus())
     
 install_and_use_module_dag()

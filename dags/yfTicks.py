@@ -73,7 +73,7 @@ def install_and_use_module_dag():
             "mthd" : "liveYfinanaceTick",
             "key" : 'Yfinance.FastInfo',
             # Use Jinja to render the XCom value into the argument
-            "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
+            "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='run_flag') }}"
         }
     )
 

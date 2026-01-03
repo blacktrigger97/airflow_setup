@@ -41,7 +41,6 @@ def install_and_use_module_dag():
             runCheck["run_flag"] = True
         
         context["ti"].xcom_push(key="run_flag", value=runCheck["run_flag"])
-        return runCheck["run_flag"]
 
 
     def isolated_tick_task(mthd: str, key: str, fetch_runflag):

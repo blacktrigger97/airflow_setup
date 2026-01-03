@@ -56,7 +56,7 @@ def install_and_use_module_dag():
     def isolated_tick_task(mthd: str, key: str, ti=None):
         # This code runs inside the new virtual environment
 
-        fetch_runflag = ti.xcom_pull(task_ids="mStatus")
+        fetch_runflag = ti.xcom_pull(task_ids="mStatus", key='return_value')
         
         if fetch_runflag["run_flag"]:
             import pystrm # type: ignore 
@@ -72,7 +72,7 @@ def install_and_use_module_dag():
     @task
     def reRunDag(ti=None):
 
-        fetch_runflag = ti.xcom_pull(task_ids="mStatus")
+        fetch_runflag = ti.xcom_pull(task_ids="mStatus", key='return_value')
 
         if fetch_runflag["run_flag"]:
             trigger_next_run = TriggerDagRunOperator(

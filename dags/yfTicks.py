@@ -53,10 +53,10 @@ def install_and_use_module_dag():
         requirements=["pystrm"], # Specify packages and versions
         inherit_env=True
     )
-    def isolated_tick_task(mthd: str, key: str, **context):
+    def isolated_tick_task(mthd: str, key: str, ti=None):
         # This code runs inside the new virtual environment
 
-        fetch_runflag = context['ti'].xcom_pull(task_ids="mStatus")
+        fetch_runflag = ti.xcom_pull(task_ids="mStatus")
         
         if fetch_runflag["run_flag"]:
             import pystrm # type: ignore 
@@ -70,9 +70,9 @@ def install_and_use_module_dag():
 
 
     @task
-    def reRunDag(**context):
+    def reRunDag(ti=None):
 
-        fetch_runflag = context['ti'].xcom_pull(task_ids="mStatus")
+        fetch_runflag = ti.xcom_pull(task_ids="mStatus")
 
         if fetch_runflag["run_flag"]:
             trigger_next_run = TriggerDagRunOperator(
@@ -86,7 +86,7 @@ def install_and_use_module_dag():
 
             trigger_next_run
 
-
-    mStatus() >> isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo') >> reRunDag()
+    runStatus = mStatus()
+    isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo', runStatus) >> reRunDag(runStatus)
     
 install_and_use_module_dag()

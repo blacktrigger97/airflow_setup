@@ -9,9 +9,6 @@ from airflow.sdk import task, dag
 from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
 
-# Create the NSE calendar
-nse_calendar = mcal.get_calendar('XNSE')
-
 @dag(dag_id="yfTicks", schedule='@daily', start_date=datetime(2026, 1, 5), catchup=False)
 def install_and_use_module_dag():
 
@@ -19,6 +16,9 @@ def install_and_use_module_dag():
     
     @task(task_id='mStatus')
     def mStatus() -> dict[str, bool]:
+
+        # Create the NSE calendar
+        nse_calendar = mcal.get_calendar('XNSE')
         
         runCheck = {"run_flag" : False}
 

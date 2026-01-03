@@ -12,7 +12,7 @@ from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOpe
 # Create the NSE calendar
 nse_calendar = mcal.get_calendar('XNSE')
 
-@dag(dag_id="yfTicks", schedule=None, start_date=datetime(2026, 1, 5), catchup=False)
+@dag(dag_id="yfTicks", schedule='@daily', start_date=datetime(2026, 1, 5), catchup=False)
 def install_and_use_module_dag():
 
     jobdir_chng()

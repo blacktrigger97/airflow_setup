@@ -82,8 +82,8 @@ def install_and_use_module_dag():
         return None
 
 
-    runStatus = mStatus()
-    fastInfo = isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo')
-    runStatus >> fastInfo >> reRunDag()
+    #  mStatus()
+    # fastInfo = isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo')
+    mStatus() >> isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo') >> reRunDag()
     
 install_and_use_module_dag()

@@ -45,7 +45,7 @@ def install_and_use_module_dag():
         requirements=["pystrm"], # Specify packages and versions
         inherit_env=True
     )
-    def isolated_tick_task(mthd: str, key: str, **context) -> None:
+    def isolated_tick_task(mthd: str, key: str, **context):
         # This code runs inside the new virtual environment
 
         fetch_runflag = context['ti'].xcom_pull(task_ids="mStatus")
@@ -59,12 +59,10 @@ def install_and_use_module_dag():
             # ... your task logic here ...
 
             return main_function(mthd, key)
-        else:
-            return None
 
 
     @task
-    def reRunDag(**context) -> None:
+    def reRunDag(**context):
 
         fetch_runflag = context['ti'].xcom_pull(task_ids="mStatus")
 
@@ -79,7 +77,6 @@ def install_and_use_module_dag():
             )
 
             trigger_next_run
-        return None
 
 
     runStatus = mStatus()

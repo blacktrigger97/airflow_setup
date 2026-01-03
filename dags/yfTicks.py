@@ -16,7 +16,7 @@ nse_calendar = mcal.get_calendar('XNSE')
 def install_and_use_module_dag():
 
     jobdir_chng()
-
+    
     @task
     def mStatus() -> dict[str, bool]:
         
@@ -83,7 +83,7 @@ def install_and_use_module_dag():
 
 
     runStatus = mStatus()
-    isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo', runStatus)
-    reRunDag(runStatus)
+    fastInfo = isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo')
+    runStatus >> fastInfo >> reRunDag()
     
 install_and_use_module_dag()

@@ -49,8 +49,8 @@ def install_and_use_module_dag():
         fetch_runflag = ti.xcom_pull(task_ids="mStatus", key="return_value")
         
         if fetch_runflag["run_flag"]:
-            import pystrm
-            from pystrm import main_function
+            import pystrm # type: ignore 
+            from pystrm import main_function # type: ignore 
 
             print(f"Python version in venv: {sys.version}")
             print(f"pystrm version: {pystrm.__version__}")

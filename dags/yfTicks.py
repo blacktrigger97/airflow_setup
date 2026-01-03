@@ -5,6 +5,7 @@ from time import sleep
 from utils import jobdir_chng
 
 from airflow.sdk import task, dag
+from airflow.providers.standard.operators.python import PythonVirtualenvOperator
 from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
 
@@ -44,14 +45,11 @@ def install_and_use_module_dag():
 
 
 
-    @task.virtualenv(
-        task_id="Ticks_FastInfo",
-        system_site_packages=False, # Set to True to access system packages (including Airflow)
-        requirements=["pystrm"], # Specify packages and versions
-        op_kwargs={
-        "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
-        }
-    )
+    # @task.virtualenv(
+    #     task_id="Ticks_FastInfo",
+    #     system_site_packages=False, # Set to True to access system packages (including Airflow)
+    #     requirements=["pystrm"] # Specify packages and versions
+    # )
     def isolated_tick_task(mthd: str, key: str, fetch_runflag: bool):
         # This code runs inside the new virtual environment
 
@@ -66,6 +64,18 @@ def install_and_use_module_dag():
             # ... your task logic here ...
 
             return main_function(mthd, key)
+        
+    fastInfo = PythonVirtualenvOperator(
+        task_id='puller_task_venv',
+        python_callable=isolated_tick_task,
+        requirements=['some_python_package'],
+        op_kwargs={
+            "mthd" : "liveYfinanaceTick",
+            "key" : 'Yfinance.FastInfo',
+            # Use Jinja to render the XCom value into the argument
+            "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
+        }
+    )
 
 
     @task
@@ -86,6 +96,6 @@ def install_and_use_module_dag():
             trigger_next_run
 
     #runStatus = mStatus()
-    mStatus() >> isolated_tick_task('liveYfinanaceTick', 'Yfinance.FastInfo') >> reRunDag()
+    mStatus() >> fastInfo >> reRunDag()
     
 install_and_use_module_dag()

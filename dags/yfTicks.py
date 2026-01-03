@@ -1,7 +1,7 @@
 from __future__ import annotations
 import sys
 # import pandas_market_calendars as mcal
-from datetime import datetime, date
+from datetime import datetime
 from time import sleep
 from utils import jobdir_chng
 
@@ -23,6 +23,7 @@ def install_and_use_module_dag():
     def mStatus():
 
         import pandas_market_calendars as mcal
+        from datetime import datetime, date
 
         # Create the NSE calendar
         nse_calendar = mcal.get_calendar('XNSE')

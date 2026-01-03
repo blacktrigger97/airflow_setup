@@ -54,12 +54,6 @@ Postgresql:
   schema: runlogs
   table: logs
 
-Questdb:
-  hostname: questdb.bdc.home
-  port: 9000
-  username: root
-  password: abcd1234
-
 Nessie:
   conf:
     url: http://nessie.bdc.home:19120/iceberg/main
@@ -87,14 +81,14 @@ SparkParam:
   master: spark://sm.bdc.home:7077
   common:
     miniopath: s3://
-  kafkaIcebergNessie:
-    jars: 
-      # - iceberg-spark-runtime-*.jar
-      # - nessie-spark-extensions-*.jar
-      # - spark-sql-kafka-*.jar
-      # - commons-pool2-*.jar
-      # - kafka-clients-*.jar
-      # - spark-avro_2.12-3.5.5.jar
+  # kafkaIcebergNessie:
+  #   jars: 
+  #     # - iceberg-spark-runtime-*.jar
+  #     # - nessie-spark-extensions-*.jar
+  #     # - spark-sql-kafka-*.jar
+  #     # - commons-pool2-*.jar
+  #     # - kafka-clients-*.jar
+  #     # - spark-avro_2.12-3.5.5.jar
 
 Market: 
   LiveTime: 25200

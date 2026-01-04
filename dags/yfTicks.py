@@ -14,7 +14,7 @@ def install_and_use_module_dag():
     jobdir_chng()
     
     def mStatus():
-        
+
         import logging
         import pandas_market_calendars as mcal
         from datetime import datetime
@@ -42,7 +42,7 @@ def install_and_use_module_dag():
                 while (time_diff > 300):
                     time_diff = int((open_time - datetime.now(local_tz).replace(tzinfo=None)).total_seconds())
                     logging.info(f"Time difference : {time_diff}")
-                    sleep(1)
+                    sleep(60)
                     continue
                 
                 runCheck["run_flag"] = True
@@ -55,7 +55,7 @@ def install_and_use_module_dag():
         python_callable=mStatus,
         do_xcom_push=True, # Must be True (default)
         requirements=['pandas_market_calendars'], 
-        system_site_packages=False
+        system_site_packages=True
     )
 
 

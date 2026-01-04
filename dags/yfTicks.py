@@ -55,17 +55,17 @@ def install_and_use_module_dag():
 
         try:
             flag = literal_eval(fetch_runflag)
+
+            if flag:
+                import pystrm # type: ignore 
+                from pystrm import main_function # type: ignore 
+
+                print(f"Python version in venv: {sys.version}")
+                print(f"pystrm version: {pystrm.__version__}")
+
+                return main_function(mthd, key)
         except (ValueError, SyntaxError):
             print(f"Error: '{fetch_runflag}' is not a valid Python literal")
-
-        if flag:
-            import pystrm # type: ignore 
-            from pystrm import main_function # type: ignore 
-
-            print(f"Python version in venv: {sys.version}")
-            print(f"pystrm version: {pystrm.__version__}")
-
-            return main_function(mthd, key)
         
     fastInfo = PythonVirtualenvOperator(
         task_id='Ticks_FastInfo',

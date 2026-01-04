@@ -14,8 +14,7 @@ def install_and_use_module_dag():
 
     jobdir_chng()
     
-    @task
-    def mStatus(**context):
+    def mStatus():
 
         import pandas_market_calendars as mcal
         from datetime import datetime, date
@@ -40,7 +39,16 @@ def install_and_use_module_dag():
             
             runCheck["run_flag"] = True
         
-        context["ti"].xcom_push(key="run_flag", value=runCheck["run_flag"])
+        # context["ti"].xcom_push(key="run_flag", value=runCheck["run_flag"])
+        return runCheck["run_flag"]
+    
+    runStatusCheck = PythonVirtualenvOperator(
+        task_id='mStatus',
+        python_callable=mStatus,
+        do_xcom_push=True, # Must be True (default)
+        requirements=['pandas_market_calendars'], 
+        system_site_packages=False
+    )
 
 
     def isolated_tick_task(mthd: str, key: str, fetch_runflag: str):
@@ -74,7 +82,7 @@ def install_and_use_module_dag():
             "mthd" : "liveYfinanaceTick",
             "key" : 'Yfinance.FastInfo',
             # Use Jinja to render the XCom value into the argument
-            "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='run_flag') }}"
+            "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
         }
     )
 
@@ -82,7 +90,7 @@ def install_and_use_module_dag():
     @task
     def reRunDag(**context):
 
-        fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="run_flag")
+        fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="return_value")
 
         if fetch_runflag:
             trigger_next_run = TriggerDagRunOperator(
@@ -93,6 +101,6 @@ def install_and_use_module_dag():
 
             trigger_next_run
 
-    mStatus() >> fastInfo >> reRunDag()
+    runStatusCheck >> fastInfo >> reRunDag()
     
 install_and_use_module_dag()

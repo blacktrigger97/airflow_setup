@@ -1,5 +1,6 @@
 from __future__ import annotations
 import sys
+import logging
 from datetime import datetime
 from utils import jobdir_chng
 
@@ -7,6 +8,8 @@ from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonVirtualenvOperator
 from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
+
+logger = logging.getLogger(__name__)
 
 @dag(dag_id="yfTicks", schedule='@daily', start_date=datetime(2026, 1, 3), catchup=False)
 def install_and_use_module_dag():
@@ -22,8 +25,8 @@ def install_and_use_module_dag():
 
         local_tz = ZoneInfo("Asia/Kolkata")
         today = datetime.now(local_tz).date() 
-        print(datetime.now(local_tz).replace(tzinfo=None))
-        print(f"Today : {today}")
+        logger.info(datetime.now(local_tz).replace(tzinfo=None))
+        logger.info(f"Today : {today}")
 
         runCheck = {"run_flag" : False}
 
@@ -40,7 +43,7 @@ def install_and_use_module_dag():
             if datetime.now(local_tz).replace(tzinfo=None) <= open_time:
                 while (time_diff > 300):
                     time_diff = int((open_time - datetime.now(local_tz).replace(tzinfo=None)).total_seconds())
-                    print(time_diff)
+                    logger.info(f"Time difference : {time_diff}")
                     sleep(1)
                     continue
                 

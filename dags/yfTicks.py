@@ -22,7 +22,7 @@ def install_and_use_module_dag():
 
         local_tz = ZoneInfo("Asia/Kolkata")
         today = datetime.now(local_tz).date() 
-        print(datetime.now(local_tz))
+        print(datetime.now(local_tz).replace(tzinfo=None))
         print(f"Today : {today}")
 
         runCheck = {"run_flag" : False}

@@ -20,7 +20,7 @@ def install_and_use_module_dag():
         from datetime import datetime
         from zoneinfo import ZoneInfo
 
-        local_tz = ZoneInfo("locaAsia/Kolkata")
+        local_tz = ZoneInfo("Asia/Kolkata")
         today = datetime.now(local_tz).date() 
 
         runCheck = {"run_flag" : False}

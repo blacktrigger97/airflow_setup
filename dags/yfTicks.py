@@ -66,6 +66,8 @@ def install_and_use_module_dag():
                 return main_function(mthd, key)
         except (ValueError, SyntaxError):
             print(f"Error: '{fetch_runflag}' is not a valid Python literal")
+            sleep(1)
+            sys.exit(1)
         
     fastInfo = PythonVirtualenvOperator(
         task_id='Ticks_FastInfo',

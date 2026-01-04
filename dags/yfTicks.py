@@ -17,19 +17,22 @@ def install_and_use_module_dag():
     def mStatus():
 
         import pandas_market_calendars as mcal
-        from datetime import datetime, date
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+
+        local_tz = ZoneInfo("locaAsia/Kolkata")
+        today = datetime.now(local_tz).date() 
 
         runCheck = {"run_flag" : False}
 
         nse_calendar = mcal.get_calendar('XNSE')
-        today = date.today()
         
         is_trading_day = nse_calendar.valid_days(start_date=today, end_date=today, tz='Asia/Kolkata')
 
         if not is_trading_day.empty:
             schedule = nse_calendar.schedule(start_date=today, end_date=today, tz='Asia/Kolkata')
 
-            if datetime.now() <= schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None):
+            if datetime.now(local_tz) <= schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None):
                 while (int((schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None) - datetime.now()).total_seconds()) > 300):
                     sleep(1)
                     continue

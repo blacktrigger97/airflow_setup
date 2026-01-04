@@ -1,7 +1,6 @@
 from __future__ import annotations
 import sys
 from datetime import datetime
-from time import sleep
 from utils import jobdir_chng
 
 from airflow.sdk import task, dag
@@ -19,6 +18,7 @@ def install_and_use_module_dag():
         import pandas_market_calendars as mcal
         from datetime import datetime
         from zoneinfo import ZoneInfo
+        from time import sleep
 
         local_tz = ZoneInfo("Asia/Kolkata")
         today = datetime.now(local_tz).date() 
@@ -57,6 +57,7 @@ def install_and_use_module_dag():
         # This code runs inside the new virtual environment
 
         from ast import literal_eval
+        from time import sleep
 
         try:
             flag = literal_eval(fetch_runflag)

@@ -33,9 +33,13 @@ def install_and_use_module_dag():
 
         if not is_trading_day.empty:
             schedule = nse_calendar.schedule(start_date=today, end_date=today, tz='Asia/Kolkata')
+            
+            time_diff = int((schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None) - datetime.now()).total_seconds())
 
             if datetime.now(local_tz).replace(tzinfo=None) <= schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None):
-                while (int((schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None) - datetime.now()).total_seconds()) > 300):
+                while (time_diff > 300):
+                    time_diff = int((schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None) - datetime.now()).total_seconds())
+                    print(time_diff)
                     sleep(1)
                     continue
                 

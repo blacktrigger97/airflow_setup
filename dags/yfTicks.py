@@ -19,12 +19,9 @@ def install_and_use_module_dag():
         import pandas_market_calendars as mcal
         from datetime import datetime, date
 
-        # Create the NSE calendar
-        nse_calendar = mcal.get_calendar('XNSE')
-        
         runCheck = {"run_flag" : False}
 
-        # Define the day you want to check (e.g., today)
+        nse_calendar = mcal.get_calendar('XNSE')
         today = date.today()
         
         is_trading_day = nse_calendar.valid_days(start_date=today, end_date=today, tz='Asia/Kolkata')
@@ -39,8 +36,8 @@ def install_and_use_module_dag():
             
             runCheck["run_flag"] = True
         
-        # context["ti"].xcom_push(key="run_flag", value=runCheck["run_flag"])
         return runCheck["run_flag"]
+    
     
     runStatusCheck = PythonVirtualenvOperator(
         task_id='mStatus',
@@ -58,9 +55,7 @@ def install_and_use_module_dag():
 
         try:
             flag = literal_eval(fetch_runflag)
-            # result is False and has type <class 'bool'>
         except (ValueError, SyntaxError):
-            # Handle cases where the string isn't a valid Python literal
             print(f"Error: '{fetch_runflag}' is not a valid Python literal")
 
         if flag:
@@ -69,7 +64,6 @@ def install_and_use_module_dag():
 
             print(f"Python version in venv: {sys.version}")
             print(f"pystrm version: {pystrm.__version__}")
-            # ... your task logic here ...
 
             return main_function(mthd, key)
         
@@ -96,7 +90,7 @@ def install_and_use_module_dag():
             trigger_next_run = TriggerDagRunOperator(
                 task_id='rerun',
                 trigger_dag_id='yfTicks',
-                trigger_rule='all_success' # Default behavior
+                trigger_rule='all_success'
             )
 
             trigger_next_run

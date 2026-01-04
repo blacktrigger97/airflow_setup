@@ -1,6 +1,5 @@
 from __future__ import annotations
 import sys
-import logging
 from datetime import datetime
 from utils import jobdir_chng
 
@@ -15,7 +14,8 @@ def install_and_use_module_dag():
     jobdir_chng()
     
     def mStatus():
-
+        
+        import logging
         import pandas_market_calendars as mcal
         from datetime import datetime
         from zoneinfo import ZoneInfo

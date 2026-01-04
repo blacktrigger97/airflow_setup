@@ -61,7 +61,7 @@ def install_and_use_module_dag():
 
     def isolated_tick_task(mthd: str, key: str, fetch_runflag: str):
         # This code runs inside the new virtual environment
-
+        import logging
         from ast import literal_eval
         from time import sleep
 
@@ -77,7 +77,7 @@ def install_and_use_module_dag():
 
                 return main_function(mthd, key)
         except (ValueError, SyntaxError):
-            print(f"Error: '{fetch_runflag}' is not a valid Python literal")
+            logging.info(f"Error: '{fetch_runflag}' is not a valid Python literal")
             sleep(1)
             sys.exit(1)
             
@@ -85,7 +85,7 @@ def install_and_use_module_dag():
     fastInfo = PythonVirtualenvOperator(
         task_id='Ticks_FastInfo',
         python_callable=isolated_tick_task,
-        system_site_packages=False,
+        system_site_packages=True,
         requirements=['pystrm'],
         op_kwargs={
             "mthd" : "liveYfinanaceTick",

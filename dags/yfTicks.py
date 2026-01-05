@@ -1,5 +1,6 @@
 from __future__ import annotations
 import sys
+import logging
 from datetime import datetime
 from utils import jobdir_chng
 
@@ -100,6 +101,8 @@ def install_and_use_module_dag():
     def reRunDag(**context):
 
         fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="return_value")
+
+        logging.info(f"fetch_runflag : {fetch_runflag}")
 
         if fetch_runflag:
             trigger_next_run = TriggerDagRunOperator(

@@ -37,16 +37,16 @@ def install_and_use_module_dag():
             schedule = nse_calendar.schedule(start_date=today, end_date=today, tz='Asia/Kolkata')
             open_time = schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None)
             
-            time_diff = int((open_time - datetime.now(local_tz).replace(tzinfo=None)).total_seconds())
-
-            if datetime.now(local_tz).replace(tzinfo=None) <= open_time:
-                while (time_diff > 300):
-                    time_diff = int((open_time - datetime.now(local_tz).replace(tzinfo=None)).total_seconds())
-                    logging.info(f"Time difference : {time_diff}")
-                    sleep(60)
-                    continue
-                
-                runCheck["run_flag"] = True
+            # time_diff = int((open_time - datetime.now(local_tz).replace(tzinfo=None)).total_seconds())
+            time_diff = 10
+            # if datetime.now(local_tz).replace(tzinfo=None) <= open_time:
+            while (time_diff > 300):
+                time_diff = int((open_time - datetime.now(local_tz).replace(tzinfo=None)).total_seconds())
+                logging.info(f"Time difference : {time_diff}")
+                sleep(60)
+                continue
+            
+            runCheck["run_flag"] = True
         
         return runCheck["run_flag"]
     

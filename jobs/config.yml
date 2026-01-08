@@ -91,62 +91,9 @@ SparkParam:
   #     # - spark-avro_2.12-3.5.5.jar
 
 Market: 
-  LiveTime: 25200
+  Interval: 2
   Symbols: 
-    - ADANIENT
-    - ADANIPORTS
-    - APOLLOHOSP
-    - ASIANPAINT
-    - AXISBANK
-    - BAJAJ-AUTO
-    - BAJFINANCE
-    - BAJAJFINSV
-    - BPCL
-    - BHARTIARTL
-    - BRITANNIA
-    - CIPLA
-    - COALINDIA
-    - DIVISLAB
-    - DRREDDY
-    - EICHERMOT
-    - GRASIM
-    - HCLTECH
-    - HDFCBANK
-    - HDFCLIFE
-    - HEROMOTOCO
-    - HINDALCO
-    - HINDUNILVR
-    - ICICIBANK
-    - ITC
-    - INDUSINDBK
-    - INFY
-    - JSWSTEEL
-    - KOTAKBANK
-    - LTIM
-    - LT
-    - M&M
-    - MARUTI
-    - NTPC
-    - NESTLEIND
-    - ONGC
-    - POWERGRID
-    - RELIANCE
-    - SBILIFE
-    - SHRIRAMFIN
-    - SBIN
-    - SUNPHARMA
-    - TCS
-    - TATACONSUM
-    - TATAMOTORS
-    - TATASTEEL
-    - TECHM
-    - TITAN
-    - ULTRACEMCO
-    - WIPRO
-    - MAZDOCK
-    - COCHINSHIP
-    - JWL
-    - TITAGARH
+    -
   
 JugaadData:
   appName: jugaadData

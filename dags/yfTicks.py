@@ -1,5 +1,4 @@
 from __future__ import annotations
-import sys
 import logging
 from datetime import datetime
 from utils import jobdir_chng
@@ -21,34 +20,34 @@ def install_and_use_module_dag():
         from datetime import datetime
         from zoneinfo import ZoneInfo
         from time import sleep
-
         local_tz = ZoneInfo("Asia/Kolkata")
-        today = datetime.now(local_tz).date() 
-        logging.info(datetime.now(local_tz).replace(tzinfo=None))
-        logging.info(f"Today : {today}")
+        now = datetime.now(local_tz)
+        today = now.date()
+        logging.info(f"Now: {now.isoformat()}")
+        logging.info(f"Today: {today}")
 
-        runCheck = {"run_flag" : False}
+        run_flag = False
 
         nse_calendar = mcal.get_calendar('XNSE')
-        
+
         is_trading_day = nse_calendar.valid_days(start_date=today, end_date=today, tz='Asia/Kolkata')
 
         if not is_trading_day.empty:
             schedule = nse_calendar.schedule(start_date=today, end_date=today, tz='Asia/Kolkata')
-            open_time = schedule.iloc[0]['market_open'].to_pydatetime().replace(tzinfo=None)
-            
-            time_diff = int((open_time - datetime.now(local_tz).replace(tzinfo=None)).total_seconds())
+            # keep times timezone-aware and compare in the same tz
+            open_time = schedule.iloc[0]['market_open'].to_pydatetime().astimezone(local_tz)
 
-            if datetime.now(local_tz).replace(tzinfo=None) <= open_time:
-                while (time_diff > 300):
-                    time_diff = int((open_time - datetime.now(local_tz).replace(tzinfo=None)).total_seconds())
+            time_diff = int((open_time - datetime.now(local_tz)).total_seconds())
+
+            if datetime.now(local_tz) <= open_time:
+                while time_diff > 300:
+                    time_diff = int((open_time - datetime.now(local_tz)).total_seconds())
                     logging.info(f"Time difference : {time_diff}")
                     sleep(60)
-                    continue
-                    
-                runCheck["run_flag"] = True
-        
-        return runCheck["run_flag"]
+
+                run_flag = True
+
+        return run_flag
     
     
     runStatusCheck = PythonVirtualenvOperator(
@@ -63,22 +62,29 @@ def install_and_use_module_dag():
     def isolated_tick_task(mthd: str, key: str, fetch_runflag: str):
         # This code runs inside the new virtual environment
         import logging
+        import sys
         from ast import literal_eval
         from time import sleep
 
         try:
-            flag = literal_eval(fetch_runflag)
+            flag = fetch_runflag
+            # handle the common case where the XCom is a string literal
+            if isinstance(fetch_runflag, str):
+                try:
+                    flag = literal_eval(fetch_runflag)
+                except (ValueError, SyntaxError):
+                    flag = fetch_runflag.strip().lower() in ("true", "1", "yes")
 
             if flag:
-                import pystrm # type: ignore 
-                from pystrm import main_function # type: ignore 
+                import pystrm  # type: ignore
+                from pystrm import main_function  # type: ignore
 
-                print(f"Python version in venv: {sys.version}")
-                print(f"pystrm version: {pystrm.__version__}")
+                logging.info(f"Python version in venv: {sys.version}")
+                logging.info(f"pystrm version: {getattr(pystrm, '__version__', 'unknown')}")
 
                 return main_function(mthd, key)
-        except (ValueError, SyntaxError):
-            logging.info(f"Error: '{fetch_runflag}' is not a valid Python literal")
+        except Exception as exc:
+            logging.exception("Error running tick task: %s", exc)
             sleep(1)
             sys.exit(1)
             
@@ -111,7 +117,8 @@ def install_and_use_module_dag():
                 trigger_rule='all_success'
             )
 
-            trigger_next_run
+            # Execute the operator from within the Python task so the DAG is triggered immediately
+            trigger_next_run.execute(context)
 
     runStatusCheck >> fastInfo >> reRunDag()
     

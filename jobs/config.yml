@@ -93,7 +93,16 @@ SparkParam:
 Market: 
   Interval: 2
   Symbols: 
-    -
+    - RELIANCE
+    - TCS
+    - HDFCBANK
+    - INFY
+    - HINDUNILVR
+    - ICICIBANK
+    - KOTAKBANK
+    - SBIN
+    - LT
+    - AXISBANK
   
 JugaadData:
   appName: jugaadData

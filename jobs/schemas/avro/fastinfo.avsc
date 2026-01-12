@@ -13,7 +13,7 @@
         {"name" : "open", "type" : "double"},
         {"name" : "previousclose", "type" : "double"},
         {"name" : "quotetype", "type" : "string"},
-        {"name" : "regularmarketpreviousclose", "type" : "double", "default" : null},
+        {"name" : "regularmarketpreviousclose", "type" : ["null", "double"], "default" : null},
         {"name" : "shares", "type" : "long"},
         {"name" : "tendayaveragevolume", "type" : "long"},
         {"name" : "threemonthaveragevolume", "type" : "long"},

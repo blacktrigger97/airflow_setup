@@ -7,7 +7,7 @@ Logging:
       format: '[%(name)s|%(levelname)s|%(module)s|%(funcName)s|L%(lineno)d] %(asctime)s: %(message)s'
       datefmt: '%Y-%m-%d-%H:%M:%S%z'
     json:
-      (): pystrm.utils.logger.jsonLogging.logJSONFormatter
+      (): utils.logger.jsonLogging.logJSONFormatter
       fmt_keys:
         run_id: run_id
         jobtype: jobtype
@@ -32,10 +32,10 @@ Logging:
     #   maxBytes: 104857600
     #   filename: logs/
     psgdb:
-      class: pystrm.utils.logger.psgLogging.CustomHandler
+      class: utils.logger.psgLogging.CustomHandler
       level: ERROR
     queue_listener:
-      class: pystrm.utils.logger.QueueListenerHandler.QueueListenerHandler
+      class: utils.logger.QueueListenerHandler.QueueListenerHandler
       handlers:
         - cfg://handlers.console
         # - cfg://handlers.file_json

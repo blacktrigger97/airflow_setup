@@ -103,6 +103,50 @@ def install_and_use_module_dag():
     )
 
 
+    def isolated_tick_spark_task(mthd: str, key: str, fetch_runflag: str):
+        # This code runs inside the new virtual environment
+        import logging
+        import sys
+        from ast import literal_eval
+        from time import sleep
+
+        try:
+            flag = fetch_runflag
+            # handle the common case where the XCom is a string literal
+            if isinstance(fetch_runflag, str):
+                try:
+                    flag = literal_eval(fetch_runflag)
+                except (ValueError, SyntaxError):
+                    flag = fetch_runflag.strip().lower() in ("true", "1", "yes")
+
+            if flag:
+                import mynk_etl  # type: ignore
+                from mynk_etl import main_function  # type: ignore
+
+                logging.info(f"Python version in venv: {sys.version}")
+                logging.info(f"mynk_etl version: {getattr(mynk_etl, '__version__', 'unknown')}")
+
+                return main_function(mthd, key)
+        except Exception as exc:
+            logging.exception("Error running tick task: %s", exc)
+            sleep(1)
+            sys.exit(1)
+            
+        
+    sparkFastInfo = PythonVirtualenvOperator(
+        task_id='Ticks_Spark_FastInfo',
+        python_callable=isolated_tick_spark_task,
+        system_site_packages=True,
+        requirements=['mynk_etl'],
+        op_kwargs={
+            "mthd" : "yfinanceDataLoad",
+            "key" : "Yfinance.FastInfo",
+            # Use Jinja to render the XCom value into the argument
+            "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
+        }
+    )
+
+
     @task
     def reRunDag(**context):
 
@@ -120,6 +164,6 @@ def install_and_use_module_dag():
             # Execute the operator from within the Python task so the DAG is triggered immediately
             trigger_next_run.execute(context)
 
-    runStatusCheck >> fastInfo >> reRunDag()
+    runStatusCheck >> fastInfo >> sparkFastInfo >> reRunDag()
     
 install_and_use_module_dag()

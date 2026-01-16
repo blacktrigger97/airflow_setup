@@ -91,7 +91,7 @@ SparkParam:
   #     # - spark-avro_2.12-3.5.5.jar
 
 Market: 
-  Interval: 2
+  Interval: 5
   Symbols: 
     - RELIANCE
     - TCS

@@ -81,14 +81,14 @@ SparkParam:
   master: spark://sm.bdc.home:7077
   common:
     miniopath: s3://
-  # kafkaIcebergNessie:
-  #   jars: 
-  #     # - iceberg-spark-runtime-*.jar
-  #     # - nessie-spark-extensions-*.jar
-  #     # - spark-sql-kafka-*.jar
-  #     # - commons-pool2-*.jar
-  #     # - kafka-clients-*.jar
-  #     # - spark-avro_2.12-3.5.5.jar
+  kafkaIcebergNessie:
+    spark.executor.memory: 4g
+    spark.executor.cores: 2
+    spark.cores.max: 4
+    spark.driver.memory: 2g
+    spark.driver.cores: 1
+    spark.sql.shuffle.partitions: 9
+    
 
 Market: 
   Interval: 5
@@ -126,7 +126,7 @@ Streaming:
   common:
     triggering: 300 seconds
     mode: append
-    timeout: 25200
+    timeout: 360
     checkpointLocation: tmp/kafka/
   Opts:
     fanout-enabled: True

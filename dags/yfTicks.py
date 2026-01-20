@@ -64,7 +64,6 @@ def install_and_use_module_dag():
         import logging
         import sys
         from ast import literal_eval
-        from time import sleep
 
         try:
             flag = fetch_runflag
@@ -85,8 +84,7 @@ def install_and_use_module_dag():
                 return main_function(mthd, key)
         except Exception as exc:
             logging.exception("Error running tick task: %s", exc)
-            sleep(1)
-            sys.exit(1)
+            raise exc
             
         
     fastInfo = PythonVirtualenvOperator(
@@ -108,7 +106,6 @@ def install_and_use_module_dag():
         import logging
         import sys
         from ast import literal_eval
-        from time import sleep
 
         try:
             flag = fetch_runflag
@@ -129,8 +126,7 @@ def install_and_use_module_dag():
                 return main_function(mthd, key)
         except Exception as exc:
             logging.exception("Error running tick task: %s", exc)
-            sleep(1)
-            sys.exit(1)
+            raise exc
             
         
     sparkFastInfo = PythonVirtualenvOperator(

@@ -139,7 +139,7 @@ def install_and_use_module_dag():
         system_site_packages=True,
         requirements=['mynk_etl'],
         op_kwargs={
-            "mthd" : "yfinanceDataLoad",
+            "mthd" : "yfinanceTickData",
             "key" : "Yfinance.FastInfo",
             # Use Jinja to render the XCom value into the argument
             "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"

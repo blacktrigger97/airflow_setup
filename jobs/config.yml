@@ -45,6 +45,7 @@ Logging:
     handlers:
       - queue_listener
 
+
 Postgresql:
   hostname: postgresql.bdc.home
   port: 5432
@@ -54,16 +55,19 @@ Postgresql:
   schema: runlogs
   table: logs
 
+
 Nessie:
   conf:
     url: http://nessie.bdc.home:19120/iceberg/main
     warehouse: s3://warehouse/nessie
+
 
 Minio:
   conf:
     endpoint: http://nginx-lb.bdc.home:9000
     user: admin
     pass: abcd1234
+
 
 Kafka:
   kafka-broker-conf:
@@ -77,6 +81,7 @@ Kafka:
     avro: /schemas/avro/
     json: /schemas/json/
 
+
 SparkParam:
   master: spark://sm.bdc.home:7077
   common:
@@ -88,7 +93,7 @@ SparkParam:
     spark.driver.memory: 2g
     spark.driver.cores: 1
     spark.sql.shuffle.partitions: 9
-    
+
 
 Market: 
   Interval: 5
@@ -104,15 +109,18 @@ Market:
     - LT
     - AXISBANK
   
+
 JugaadData:
   appName: jugaadData
   dbName: jugaaddb
   num_process: 5
 
+
 Yfinance:
   appName: yfinance
   dbName: yfinance
   num_process: 5
+
 
 NonStream:
   common:
@@ -121,6 +129,7 @@ NonStream:
     path: archive/
   File:
     format: parquet
+
 
 Streaming:
   common:
@@ -133,6 +142,7 @@ Streaming:
     path: archive/
   File:
     format: parquet
+
 
 MultiSink:
   common:

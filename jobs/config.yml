@@ -1,154 +1,206 @@
-Logging:
-  version: 1
-  disable_existing_loggers: False
-  incremental: False
-  formatters:
-    simple:
-      format: '[%(name)s|%(levelname)s|%(module)s|%(funcName)s|L%(lineno)d] %(asctime)s: %(message)s'
-      datefmt: '%Y-%m-%d-%H:%M:%S%z'
-    json:
-      (): utils.logger.jsonLogging.logJSONFormatter
-      fmt_keys:
-        run_id: run_id
-        jobtype: jobtype
-        level: levelname
-        message: message
-        logger: name
-        module: module
-        function: funcName
-        file: filename
-        line: lineno
-        timestamp: timestamp
-  handlers:
-    console:
-      class: logging.StreamHandler
-      level: INFO
-      formatter: simple
-      stream: ext://sys.stdout
-    # file_json:
-    #   class: logging.handlers.RotatingFileHandler
-    #   level: WARN
-    #   formatter: json
-    #   maxBytes: 104857600
-    #   filename: logs/
-    psgdb:
-      class: utils.logger.psgLogging.CustomHandler
-      level: ERROR
-    queue_listener:
-      class: utils.logger.QueueListenerHandler.QueueListenerHandler
-      handlers:
-        - cfg://handlers.console
-        # - cfg://handlers.file_json
-        - cfg://handlers.psgdb
-  root:
-    level: NOTSET
+DEV:
+  Logging:
+    version: 1
+    disable_existing_loggers: False
+    incremental: False
+    formatters:
+      simple:
+        format: '[%(name)s|%(levelname)s|%(module)s|%(funcName)s|L%(lineno)d] %(asctime)s: %(message)s'
+        datefmt: '%Y-%m-%d-%H:%M:%S%z'
+      json:
+        (): utils.logger.jsonLogging.logJSONFormatter
+        fmt_keys:
+          run_id: run_id
+          jobtype: jobtype
+          level: levelname
+          message: message
+          logger: name
+          module: module
+          function: funcName
+          file: filename
+          line: lineno
+          timestamp: timestamp
     handlers:
-      - queue_listener
+      console:
+        class: logging.StreamHandler
+        level: INFO
+        formatter: simple
+        stream: ext://sys.stdout
+      # file_json:
+      #   class: logging.handlers.RotatingFileHandler
+      #   level: WARN
+      #   formatter: json
+      #   maxBytes: 104857600
+      #   filename: logs/
+      psgdb:
+        class: utils.logger.psgLogging.CustomHandler
+        level: ERROR
+      queue_listener:
+        class: utils.logger.QueueListenerHandler.QueueListenerHandler
+        handlers:
+          - cfg://handlers.console
+          # - cfg://handlers.file_json
+          - cfg://handlers.psgdb
+    root:
+      level: NOTSET
+      handlers:
+        - queue_listener
 
 
-Postgresql:
-  hostname: postgresql.bdc.home
-  port: 5432
-  username: root
-  password: abcd1234
-  db: bdc
-  schema: runlogs
-  table: logs
+  Postgresql:
+    hostname: postgresql.bdc.home
+    port: 5432
+    username: root
+    password: abcd1234
+    db: bdc
+    schema: runlogs
+    table: logs
 
 
-Nessie:
-  conf:
-    url: http://nessie.bdc.home:19120/iceberg/main
-    warehouse: s3://warehouse/nessie
+  Nessie:
+    conf:
+      url: http://nessie.bdc.home:19120/iceberg/main
+      warehouse: s3://warehouse/nessie
 
 
-Minio:
-  conf:
-    endpoint: http://nginx-lb.bdc.home:9000
-    user: admin
-    pass: abcd1234
+  Minio:
+    conf:
+      endpoint: http://nginx-lb.bdc.home:9000
+      user: admin
+      pass: abcd1234
 
 
-Kafka:
-  kafka-broker-conf:
-    bootstrap.servers: kafka-1.bdc.home:9092,kafka-2.bdc.home:9092,kafka-3.bdc.home:9092
-    message.max.bytes: 2097152
-    compression.type: snappy
-    acks: all
-  kafka-schema-client-conf:
-    url: http://kafka-sr.bdc.home:8081
-  schema:
-    avro: /schemas/avro/
-    json: /schemas/json/
+  Kafka:
+    kafka-broker-conf:
+      bootstrap.servers: kafka-1.bdc.home:9092,kafka-2.bdc.home:9092,kafka-3.bdc.home:9092
+      message.max.bytes: 2097152
+      compression.type: snappy
+      acks: all
+    kafka-schema-client-conf:
+      url: http://kafka-sr.bdc.home:8081
+    schema:
+      avro: /schemas/avro/
+      json: /schemas/json/
 
 
-SparkParam:
-  master: spark://sm.bdc.home:7077
-  common:
-    miniopath: s3://
-  kafkaIcebergNessie:
-    spark.executor.memory: 4g
-    spark.executor.cores: 2
-    spark.cores.max: 4
-    spark.driver.memory: 2g
-    spark.driver.cores: 1
-    spark.sql.shuffle.partitions: 9
+  SparkParam:
+    master: spark://sm.bdc.home:7077
+    common:
+      miniopath: s3://
+    kafkaIcebergNessie:
+      spark.executor.memory: 4g
+      spark.executor.cores: 2
+      spark.cores.max: 4
+      spark.driver.memory: 2g
+      spark.driver.cores: 1
+      spark.sql.shuffle.partitions: 9
 
 
-Market: 
-  Interval: 5
-  Symbols: 
-    - RELIANCE
-    - TCS
-    - HDFCBANK
-    - INFY
-    - HINDUNILVR
-    - ICICIBANK
-    - KOTAKBANK
-    - SBIN
-    - LT
-    - AXISBANK
-  
+  Market: 
+    Interval: 5
+    Symbols: 
+      - RELIANCE
+      - TCS
+      - HDFCBANK
+      - INFY
+      - HINDUNILVR
+      - ICICIBANK
+      - KOTAKBANK
+      - SBIN
+      - LT
+      - AXISBANK
+    
 
-JugaadData:
-  appName: jugaadData
-  dbName: jugaaddb
-  num_process: 5
-
-
-Yfinance:
-  appName: yfinance
-  dbName: yfinance
-  num_process: 5
+  JugaadData:
+    appName: jugaadData
+    dbName: jugaaddb
+    num_process: 5
 
 
-NonStream:
-  common:
-    mode: append
-  Opts:
-    path: archive/
-  File:
-    format: parquet
+  Yfinance:
+    appName: yfinance
+    dbName: yfinance
+    num_process: 5
 
 
-Streaming:
-  common:
-    triggering: 300 seconds
-    mode: append
-    timeout: 360
-    checkpointLocation: tmp/kafka/
-  Opts:
-    fanout-enabled: True
-    path: archive/
-  File:
-    format: parquet
+  NonStream:
+    common:
+      mode: append
+    Opts:
+      path: archive/
+    File:
+      format: parquet
 
 
-MultiSink:
-  common:
-    mode: append
-  Opts:
-    path: archive/
-  File:
-    format: parquet
+  Streaming:
+    common:
+      triggering: 300 seconds
+      mode: append
+      timeout: 360
+      checkpointLocation: tmp/kafka/
+    Opts:
+      fanout-enabled: True
+      path: archive/
+    File:
+      format: parquet
 
+
+  MultiSink:
+    common:
+      mode: append
+    Opts:
+      path: archive/
+    File:
+      format: parquet
+
+
+TEST:
+  # Test configuration file for mynk_etl
+  # This file is used during development and testing
+
+  SparkParam:
+    master: local[*]
+    appName: test_etl
+    kafkaIcebergNessie:
+      spark.sql.shuffle.partitions: '200'
+      spark.sql.adaptive.enabled: 'true'
+
+  Nessie:
+    conf:
+      url: http://localhost:19120/api/v1
+      warehouse: s3a://test-bucket/test-warehouse/
+
+  Minio:
+    conf:
+      user: minioadmin
+      pass: minioadmin
+      endpoint: http://localhost:9000
+
+  Kafka:
+    kafka-broker-conf:
+      bootstrap.servers: localhost:9092
+      client.id: test-client
+    kafka-schema-client-conf:
+      url: http://localhost:8081
+      basic.auth.user.info: user:password
+
+  Streaming:
+    common:
+      mode: append
+      triggering: '10 seconds'
+      timeout: '60000'
+    Opts:
+      checkpointLocation: checkpoints/
+
+  NonStream:
+    common:
+      mode: overwrite
+    Opts: {}
+
+  test_group:
+    appName: test_app
+    dbName: test_db
+
+  yfinance:
+    appName: yfinance_app
+    dbName: financial_db

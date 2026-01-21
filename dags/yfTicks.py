@@ -1,7 +1,7 @@
 from __future__ import annotations
 import logging
 from datetime import datetime
-from utils import jobdir_chng
+# from utils import jobdir_chng
 
 from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonVirtualenvOperator
@@ -11,7 +11,7 @@ from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOpe
 @dag(dag_id="yfTicks", schedule='@daily', start_date=datetime(2026, 1, 3), catchup=False)
 def install_and_use_module_dag():
 
-    jobdir_chng()
+    # jobdir_chng()
     
     def mStatus():
 
@@ -59,7 +59,7 @@ def install_and_use_module_dag():
     )
 
 
-    def isolated_tick_task(mthd: str, key: str, fetch_runflag: str):
+    def isolated_tick_task(mthd: str, key: str, cfg_path: str, fetch_runflag: str):
         # This code runs inside the new virtual environment
         import logging
         import sys
@@ -81,7 +81,7 @@ def install_and_use_module_dag():
                 logging.info(f"Python version in venv: {sys.version}")
                 logging.info(f"pystrm version: {getattr(pystrm, '__version__', 'unknown')}")
 
-                return main_function(mthd, key)
+                return main_function(mthd, key, cfg_path)
         except Exception as exc:
             logging.exception("Error running tick task: %s", exc)
             raise exc
@@ -95,13 +95,14 @@ def install_and_use_module_dag():
         op_kwargs={
             "mthd" : "liveYfinanaceTick",
             "key" : 'Yfinance.FastInfo',
+            "cfg_path" : "/root/airflow/jobs",
             # Use Jinja to render the XCom value into the argument
             "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
         }
     )
 
 
-    def isolated_tick_spark_task(mthd: str, key: str, fetch_runflag: str):
+    def isolated_tick_spark_task(mthd: str, key: str, cfg_path: str, fetch_runflag: str):
         # This code runs inside the new virtual environment
         import logging
         import sys
@@ -123,7 +124,7 @@ def install_and_use_module_dag():
                 logging.info(f"Python version in venv: {sys.version}")
                 logging.info(f"mynk_etl version: {getattr(mynk_etl, '__version__', 'unknown')}")
 
-                return main_function(mthd, key)
+                return main_function(mthd, key, cfg_path)
         except Exception as exc:
             logging.exception("Error running tick task: %s", exc)
             raise exc
@@ -137,6 +138,7 @@ def install_and_use_module_dag():
         op_kwargs={
             "mthd" : "yfinanceTickData",
             "key" : "Yfinance.FastInfo",
+            "cfg_path" : "/root/airflow/jobs",
             # Use Jinja to render the XCom value into the argument
             "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
         }

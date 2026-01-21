@@ -1,45 +1,65 @@
-JugaadData:
+DEV:
+  JugaadData:
 
-  PriceInfo:
-    ldt: price
-    type: Streaming
-    partition: True
-    partcols: symbol,year,month,day
+    PriceInfo:
+      ldt: price
+      type: Streaming
+      partition: True
+      partcols: symbol,year,month,day
 
-Yfinance:
-  Info:
-    ldt: tick
-    type: NonStream
-    partition: False
+  Yfinance:
+    Info:
+      ldt: tick
+      type: NonStream
+      partition: False
 
-  FastInfo:
-    ldt: fastinfo
-    type: Streaming
-    schema_type: AVRO
-    infolst:
-      - currency
-      - dayHigh
-      - dayLow
-      - exchange
-      - fiftyDayAverage
-      - lastPrice
-      - lastVolume
-      - marketCap
-      - open
-      - previousClose
-      - quoteType
-      - regularMarketPreviousClose
-      - shares
-      - tenDayAverageVolume
-      - threeMonthAverageVolume
-      - timezone
-      - twoHundredDayAverage
-      - yearChange
-      - yearHigh
-      - yearLow
-    partcols: 
-      - year
-      - reporting_month
-    clusteredBy:
-      - symbol
-      - hour
+    FastInfo:
+      ldt: fastinfo
+      type: NonStream
+      schema_type: AVRO
+      infolst:
+        - currency
+        - dayHigh
+        - dayLow
+        - exchange
+        - fiftyDayAverage
+        - lastPrice
+        - lastVolume
+        - marketCap
+        - open
+        - previousClose
+        - quoteType
+        - regularMarketPreviousClose
+        - shares
+        - tenDayAverageVolume
+        - threeMonthAverageVolume
+        - timezone
+        - twoHundredDayAverage
+        - yearChange
+        - yearHigh
+        - yearLow
+      partcols: 
+        - year
+        - reporting_month
+      clusteredBy:
+        - symbol
+        - hour
+
+
+TEST:
+  # Test table configuration for mynk_etl
+  # This file is used during development and testing
+
+  test_group:
+    test_table:
+      type: Streaming
+      topic: test-topic
+      partcols: [year, month, day]
+      dbName: test_database
+
+  yfinance:
+    stock_ticks:
+      type: Streaming
+      topic: stock-tick-data
+      partcols: [year, month, day]
+      dbName: financial_data

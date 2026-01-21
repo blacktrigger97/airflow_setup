@@ -15,7 +15,7 @@ DEV:
 
     FastInfo:
       ldt: fastinfo
-      type: NonStream
+      type: Streaming
       schema_type: AVRO
       infolst:
         - currency

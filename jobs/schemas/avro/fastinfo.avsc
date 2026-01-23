@@ -22,6 +22,6 @@
         {"name" : "yearchange", "type" : "double"},
         {"name" : "yearhigh", "type" : "double"},
         {"name" : "yearlow", "type" : "double"},
-        {"name" : "recordtimestamp", "type" : "long"}
+        {"name" : "recordtimestamp", "type" : {"type": "long", "logicalType": "timestamp-millis"}}
     ]
 }

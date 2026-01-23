@@ -94,6 +94,7 @@ DEV:
       spark.driver.memory: 2g
       spark.driver.cores: 1
       spark.sql.shuffle.partitions: 9
+      spark.sql.session.timeZone: Asia/Kolkata
 
 
   Market: 

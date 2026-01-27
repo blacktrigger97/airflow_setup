@@ -19,7 +19,7 @@
         {"name" : "threemonthaveragevolume", "type" : "long"},
         {"name" : "timezone", "type" : "string"},
         {"name" : "twohundreddayaverage", "type" : "double"},
-        {"name" : "yearchange", "type" : "double"},
+        {"name" : "yearchange", "type" : ["null", "double"], "default" : null},
         {"name" : "yearhigh", "type" : "double"},
         {"name" : "yearlow", "type" : "double"},
         {"name" : "recordtimestamp", "type" : {"type": "long", "logicalType": "timestamp-millis"}}

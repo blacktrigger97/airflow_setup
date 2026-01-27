@@ -98,7 +98,7 @@ DEV:
 
 
   Market: 
-    Interval: 5
+    Interval: 10
     Symbols: 
       - RELIANCE
       - TCS

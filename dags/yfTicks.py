@@ -11,7 +11,7 @@ from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOpe
 local_timezone = pendulum.timezone("Asia/Kolkata") 
 
 
-@dag(dag_id="yfTicks", schedule='@daily', start_date=pendulum.datetime(2026, 1, 29, tz=local_timezone), catchup=False)
+@dag(dag_id="yfTicks", schedule='1 0 * * *', start_date=pendulum.datetime(2026, 1, 29, tz=local_timezone), catchup=False)
 def install_and_use_module_dag():
 
     # jobdir_chng()

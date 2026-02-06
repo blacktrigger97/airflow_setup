@@ -1,10 +1,6 @@
 from __future__ import annotations
 import logging
-import pandas_market_calendars as mcal
 import pendulum
-from datetime import datetime
-from time import sleep
-
 
 from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonVirtualenvOperator
@@ -19,7 +15,11 @@ def install_and_use_module_dag():
     # jobdir_chng()
     
     def mStatus():
-        
+
+        import logging
+        import pendulum
+        import pandas_market_calendars as mcal
+        from time import sleep
         now = pendulum.datetime(tz=local_timezone).now()
         today = now.date()
         logging.info(f"Now: {now.isoformat()}")

@@ -1,6 +1,7 @@
 from __future__ import annotations
 import logging
 import pendulum
+# from utils import jobdir_chng
 
 from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonVirtualenvOperator
@@ -9,7 +10,7 @@ from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOpe
 local_timezone = pendulum.timezone("Asia/Kolkata") 
 
 
-@dag(dag_id="yfTicks", schedule='1 0 * * *', start_date=pendulum.datetime(2026, 1, 29, tz=local_timezone), catchup=False)
+@dag(dag_id="yfTicks", schedule='0 3 * * *', start_date=pendulum.datetime(2026, 1, 29, tz=local_timezone), catchup=False)
 def install_and_use_module_dag():
 
     # jobdir_chng()
@@ -17,10 +18,13 @@ def install_and_use_module_dag():
     def mStatus():
 
         import logging
-        import pendulum
         import pandas_market_calendars as mcal
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
         from time import sleep
-        now = pendulum.datetime(tz=local_timezone).now()
+
+        local_tz = ZoneInfo("Asia/Kolkata")
+        now = datetime.now(local_tz)
         today = now.date()
         logging.info(f"Now: {now.isoformat()}")
         logging.info(f"Today: {today}")
@@ -34,13 +38,13 @@ def install_and_use_module_dag():
         if not is_trading_day.empty:
             schedule = nse_calendar.schedule(start_date=today, end_date=today, tz='Asia/Kolkata')
             # keep times timezone-aware and compare in the same tz
-            open_time = schedule.iloc[0]['market_open'].to_pydatetime().astimezone(local_timezone)
+            open_time = schedule.iloc[0]['market_open'].to_pydatetime().astimezone(local_tz)
 
-            time_diff = int((open_time - pendulum.datetime(tz=local_timezone).now()).total_seconds())
+            time_diff = int((open_time - datetime.now(local_tz)).total_seconds())
 
-            if pendulum.datetime(tz=local_timezone).now() <= open_time:
+            if datetime.now(local_tz) <= open_time:
                 while time_diff > 300:
-                    time_diff = int((open_time - pendulum.datetime(tz=local_timezone).now()).total_seconds())
+                    time_diff = int((open_time - datetime.now(local_tz)).total_seconds())
                     logging.info(f"Time difference : {time_diff}")
                     sleep(60)
 

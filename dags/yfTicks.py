@@ -1,8 +1,10 @@
 from __future__ import annotations
 import logging
+import pandas_market_calendars as mcal
 import pendulum
 from datetime import datetime
-# from utils import jobdir_chng
+from time import sleep
+
 
 from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonVirtualenvOperator
@@ -17,14 +19,8 @@ def install_and_use_module_dag():
     # jobdir_chng()
     
     def mStatus():
-
-        import logging
-        import pandas_market_calendars as mcal
-        from datetime import datetime
-        from zoneinfo import ZoneInfo
-        from time import sleep
-        local_tz = ZoneInfo("Asia/Kolkata")
-        now = datetime.now(local_tz)
+        
+        now = pendulum.datetime(tz=local_timezone).now()
         today = now.date()
         logging.info(f"Now: {now.isoformat()}")
         logging.info(f"Today: {today}")
@@ -38,13 +34,13 @@ def install_and_use_module_dag():
         if not is_trading_day.empty:
             schedule = nse_calendar.schedule(start_date=today, end_date=today, tz='Asia/Kolkata')
             # keep times timezone-aware and compare in the same tz
-            open_time = schedule.iloc[0]['market_open'].to_pydatetime().astimezone(local_tz)
+            open_time = schedule.iloc[0]['market_open'].to_pydatetime().astimezone(local_timezone)
 
-            time_diff = int((open_time - datetime.now(local_tz)).total_seconds())
+            time_diff = int((open_time - pendulum.datetime(tz=local_timezone).now()).total_seconds())
 
-            if datetime.now(local_tz) <= open_time:
+            if pendulum.datetime(tz=local_timezone).now() <= open_time:
                 while time_diff > 300:
-                    time_diff = int((open_time - datetime.now(local_tz)).total_seconds())
+                    time_diff = int((open_time - pendulum.datetime(tz=local_timezone).now()).total_seconds())
                     logging.info(f"Time difference : {time_diff}")
                     sleep(60)
 

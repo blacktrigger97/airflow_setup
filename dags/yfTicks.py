@@ -1,7 +1,6 @@
 from __future__ import annotations
 import logging
 import pendulum
-# from utils import jobdir_chng
 
 from airflow.sdk import task, dag
 from airflow.providers.standard.operators.python import PythonVirtualenvOperator
@@ -12,8 +11,6 @@ local_timezone = pendulum.timezone("Asia/Kolkata")
 
 @dag(dag_id="yfTicks", schedule='0 2 * * *', start_date=pendulum.datetime(2026, 1, 29, tz=local_timezone), catchup=False)
 def install_and_use_module_dag():
-
-    # jobdir_chng()
     
     def mStatus():
 

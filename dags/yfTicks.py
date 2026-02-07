@@ -1,9 +1,7 @@
 from __future__ import annotations
-import logging
 import pendulum
 
 from airflow.sdk import task, dag
-from airflow.providers.standard.operators.python import PythonVirtualenvOperator
 from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
 local_timezone = pendulum.timezone("Asia/Kolkata") 
@@ -12,6 +10,12 @@ local_timezone = pendulum.timezone("Asia/Kolkata")
 @dag(dag_id="yfTicks", schedule='0 2 * * *', start_date=pendulum.datetime(2026, 1, 29, tz=local_timezone), catchup=False)
 def install_and_use_module_dag():
     
+
+    @task.virtualenv(
+        task_id="mStatus",
+        system_site_packages=False, # Set to True to access system packages (including Airflow)
+        requirements=["pandas_market_calendars"], # Specify packages and versions
+    )
     def mStatus():
 
         import logging
@@ -46,19 +50,15 @@ def install_and_use_module_dag():
                     sleep(60)
 
                 run_flag = True
-
+        
         return run_flag
     
-    
-    runStatusCheck = PythonVirtualenvOperator(
-        task_id='mStatus',
-        python_callable=mStatus,
-        do_xcom_push=True, # Must be True (default)
-        requirements=['pandas_market_calendars'], 
-        system_site_packages=True
+
+    @task.virtualenv(
+        task_id="Yf_Ticks",
+        system_site_packages=False, # Set to True to access system packages (including Airflow)
+        requirements=["pystrm"] # Specify packages and versions
     )
-
-
     def isolated_tick_task(mthd: str, key: str, cfg_path: str, fetch_runflag: str):
         # This code runs inside the new virtual environment
         import logging
@@ -85,23 +85,13 @@ def install_and_use_module_dag():
         except Exception as exc:
             logging.exception("Error running tick task: %s", exc)
             raise exc
-            
-        
-    fastInfo = PythonVirtualenvOperator(
-        task_id='Ticks_FastInfo',
-        python_callable=isolated_tick_task,
-        system_site_packages=True,
-        requirements=['pystrm'],
-        op_kwargs={
-            "mthd" : "liveYfinanaceTick",
-            "key" : 'Yfinance.FastInfo',
-            "cfg_path" : "/root/airflow/jobs",
-            # Use Jinja to render the XCom value into the argument
-            "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
-        }
+
+
+    @task.virtualenv(
+        task_id="Yf_Spark_Sink",
+        system_site_packages=False, # Set to True to access system packages (including Airflow)
+        requirements=["mynk_etl"] # Specify packages and versions
     )
-
-
     def isolated_tick_spark_task(mthd: str, key: str, cfg_path: str, fetch_runflag: str):
         # This code runs inside the new virtual environment
         import logging
@@ -128,29 +118,10 @@ def install_and_use_module_dag():
         except Exception as exc:
             logging.exception("Error running tick task: %s", exc)
             raise exc
-            
         
-    sparkFastInfo = PythonVirtualenvOperator(
-        task_id='Ticks_Spark_FastInfo',
-        python_callable=isolated_tick_spark_task,
-        system_site_packages=True,
-        requirements=['mynk_etl'],
-        op_kwargs={
-            "mthd" : "yfinanceTickData",
-            "key" : "Yfinance.FastInfo",
-            "cfg_path" : "/root/airflow/jobs",
-            # Use Jinja to render the XCom value into the argument
-            "fetch_runflag": "{{ ti.xcom_pull(task_ids='mStatus', key='return_value') }}"
-        }
-    )
-
 
     @task
-    def reRunDag(**context):
-
-        fetch_runflag = context["ti"].xcom_pull(task_ids="mStatus", key="return_value")
-
-        logging.info(f"fetch_runflag : {fetch_runflag}")
+    def reRunDag(fetch_runflag: str):
 
         if fetch_runflag:
             trigger_next_run = TriggerDagRunOperator(
@@ -160,8 +131,12 @@ def install_and_use_module_dag():
             )
 
             # Execute the operator from within the Python task so the DAG is triggered immediately
-            trigger_next_run.execute(context)
+            trigger_next_run.execute()
 
-    runStatusCheck >> fastInfo >> sparkFastInfo >> reRunDag()
+
+    flag = mStatus()
+    ticks = isolated_tick_task("liveYfinanaceTick", "Yfinance.FastInfo", "/root/airflow/jobs", flag) 
+    spark_sink = isolated_tick_spark_task("yfinanceTickData", "Yfinance.FastInfo", "/root/airflow/jobs", flag) 
+    ticks >> spark_sink >> reRunDag(flag)
     
 install_and_use_module_dag()

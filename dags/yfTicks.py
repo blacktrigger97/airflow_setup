@@ -120,7 +120,7 @@ def install_and_use_module_dag():
             raise exc
         
 
-    @task
+    @task.python
     def reRunDag(fetch_runflag: str):
 
         if fetch_runflag:

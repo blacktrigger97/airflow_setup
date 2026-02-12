@@ -111,18 +111,6 @@ DEV:
       - LT
       - AXISBANK
       - TATSILV
-    
-
-  JugaadData:
-    appName: jugaadData
-    dbName: jugaaddb
-    num_process: 5
-
-
-  Yfinance:
-    appName: yfinance
-    dbName: yfinance
-    num_process: 5
 
 
   NonStream:
@@ -156,53 +144,17 @@ DEV:
       format: parquet
 
 
-TEST:
-  # Test configuration file for mynk_etl
-  # This file is used during development and testing
+  JugaadData:
+    appName: jugaadData
+    dbName: jugaaddb
+    num_process: 5
 
-  SparkParam:
-    master: local[*]
-    appName: test_etl
-    kafkaIcebergNessie:
-      spark.sql.shuffle.partitions: '200'
-      spark.sql.adaptive.enabled: 'true'
 
-  Nessie:
-    conf:
-      url: http://localhost:19120/api/v1
-      warehouse: s3a://test-bucket/test-warehouse/
+  Yfinance:
+    appName: yfinance
+    dbName: yfinance
+    num_process: 5
 
-  Minio:
-    conf:
-      user: minioadmin
-      pass: minioadmin
-      endpoint: http://localhost:9000
-
-  Kafka:
-    kafka-broker-conf:
-      bootstrap.servers: localhost:9092
-      client.id: test-client
-    kafka-schema-client-conf:
-      url: http://localhost:8081
-      basic.auth.user.info: user:password
-
-  Streaming:
-    common:
-      mode: append
-      triggering: '10 seconds'
-      timeout: '60000'
-    Opts:
-      checkpointLocation: checkpoints/
-
-  NonStream:
-    common:
-      mode: overwrite
-    Opts: {}
-
-  test_group:
-    appName: test_app
-    dbName: test_db
-
-  yfinance:
-    appName: yfinance_app
-    dbName: financial_db
+  TestETL:
+    appName: testETL
+      

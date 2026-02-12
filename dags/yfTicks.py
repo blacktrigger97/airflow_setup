@@ -121,7 +121,7 @@ def install_and_use_module_dag():
         
 
     @task.python
-    def reRunDag(fetch_runflag: str):
+    def reRunDag(fetch_runflag: str, **context):
 
         if fetch_runflag:
             trigger_next_run = TriggerDagRunOperator(
@@ -131,7 +131,7 @@ def install_and_use_module_dag():
             )
 
             # Execute the operator from within the Python task so the DAG is triggered immediately
-            trigger_next_run.execute()
+            trigger_next_run.execute(**context)
 
 
     flag = mStatus()

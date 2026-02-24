@@ -73,13 +73,17 @@ DEV:
   Kafka:
     kafka-broker-conf:
       bootstrap.servers: kafka-1.bdc.home:29092,kafka-2.bdc.home:29092,kafka-3.bdc.home:29092
-      message.max.bytes: 2097152
+      message.max.bytes: 1048576
       compression.type: snappy
       enable.idempotence: True
       acks: all
-      max.in.flight.requests.per.connection: 5
-      retries: 3
+      max.in.flight.requests.per.connection: 3
+      retries: 5
       delivery.timeout.ms: 12000
+      socket.timeout.ms: 10000
+      request.timeout.ms: 15000
+      linger.ms: 5
+      batch.size: 33554432
     kafka-schema-client-conf:
       url: http://kafka-sr.bdc.home:8081
     schema:

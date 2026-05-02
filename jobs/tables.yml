@@ -10,7 +10,7 @@ DEV:
   Yfinance:
     Info:
       ldt: tick
-      type: NonStream
+      type: Streaming
       partition: False
 
     FastInfo:

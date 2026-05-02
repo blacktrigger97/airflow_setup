@@ -60,7 +60,17 @@ DEV:
   Nessie:
     conf:
       url: http://nessie.bdc.home:19120/iceberg/main
-      warehouse: s3://warehouse/nessie
+      warehouse: s3://warehouse
+
+
+  Polaris:
+    conf:
+      url: http://polaris.bdc.home:8181/api/catalog
+      oauth2-server-uri: http://polaris.bdc.home:8181/api/catalog/v1/oauth/tokens
+      warehouse: iceberg
+      realm: POLARIS
+      credential: root:abcd1234
+      
 
 
   Minio:
@@ -68,6 +78,7 @@ DEV:
       endpoint: http://nginx-lb.bdc.home:9000
       user: admin
       pass: abcd1234
+      region: us-east-1
 
 
   Kafka:
@@ -95,7 +106,7 @@ DEV:
     master: spark://sm.bdc.home:7077
     common:
       miniopath: s3://
-    kafkaIcebergNessie:
+    resource:
       spark.executor.memory: 4g
       spark.executor.cores: 2
       spark.cores.max: 4

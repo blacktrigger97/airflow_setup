@@ -1,0 +1,21 @@
+{
+    "name": "Airflow",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "airflow_dev",
+    "workspaceFolder": "/mnt/devCode",
+    "shutdownAction": "stopCompose",
+    "overrideCommand": true,
+    // "postAttachCommand": "uv venv --clear && source .venv/bin/activate && uv sync --upgrade",
+    "customizations": {
+        "vscode": {
+            "extensions":[
+                "njpwerner.autodocstring",
+                "oliversturm.fix-json",
+                "AykutSarac.jsoncrack-vscode",
+                "charliermarsh.ruff",
+                "redhat.vscode-yaml",
+                "streetsidesoftware.avro"
+            ]
+        }
+    }
+}

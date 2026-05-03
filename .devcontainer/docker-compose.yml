@@ -1,0 +1,13 @@
+services:
+  airflow_dev:
+    build:
+      dockerfile: Dockerfile
+    image: airflow_dev
+    hostname: airflow_dev
+    container_name: airflow_dev
+    network_mode: host
+    environment:
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./../:/mnt/devCode:z
+

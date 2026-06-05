@@ -1,0 +1,1149 @@
+{
+  "type": "record",
+  "name": "info",
+  "fields": [
+    {
+      "name": "industry",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "industrykey",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "industrydisp",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "sector",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "sectorkey",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "sectordisp",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "longbusinesssummary",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "auditrisk",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "boardrisk",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "compensationrisk",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "shareholderrightsrisk",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "overallrisk",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "governanceepochdate",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "compensationasofepochdate",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "irwebsite",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "executiveteam",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": "string"
+        }
+      ]
+    },
+    {
+      "name": "maxage",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "pricehint",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "previousclose",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "open",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "daylow",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "dayhigh",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "regularmarketpreviousclose",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "regularmarketopen",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "regularmarketdaylow",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "regularmarketdayhigh",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "dividendrate",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "dividendyield",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "exdividenddate",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "payoutratio",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "fiveyearavgdividendyield",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "beta",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "trailingpe",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "forwardpe",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "volume",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "regularmarketvolume",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "averagevolume",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "averagevolume10days",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "averagedailyvolume10day",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "bid",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "ask",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "bidsize",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "asksize",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "marketcap",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "nondilutedmarketcap",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "fiftytwoweeklow",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "fiftytwoweekhigh",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "alltimehigh",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "alltimelow",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "pricetosalestrailing12months",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "fiftydayaverage",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "twohundreddayaverage",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "trailingannualdividendrate",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "trailingannualdividendyield",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "currency",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "tradeable",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "name": "enterprisevalue",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "profitmargins",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "floatshares",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "sharesoutstanding",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "heldpercentinsiders",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "heldpercentinstitutions",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "impliedsharesoutstanding",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "bookvalue",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "pricetobook",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "lastfiscalyearend",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "nextfiscalyearend",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "mostrecentquarter",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "earningsquarterlygrowth",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "netincometocommon",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "trailingeps",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "forwardeps",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "pegratio",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "lastsplitfactor",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "lastsplitdate",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "enterprisetorevenue",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "enterprisetoebitda",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "_52weekchange",
+      "type": [
+        "null",
+        "double"
+      ],
+      "aliases": [
+        "52weekchange"
+      ]
+    },
+    {
+      "name": "sandp52weekchange",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "lastdividendvalue",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "lastdividenddate",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "quotetype",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "currentprice",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "targethighprice",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "targetlowprice",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "targetmeanprice",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "targetmedianprice",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "recommendationmean",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "recommendationkey",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "numberofanalystopinions",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "totalcash",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "totalcashpershare",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "ebitda",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "totaldebt",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "quickratio",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "currentratio",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "totalrevenue",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "debttoequity",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "revenuepershare",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "returnonassets",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "returnonequity",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "grossprofits",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "freecashflow",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "operatingcashflow",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "earningsgrowth",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "revenuegrowth",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "grossmargins",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "ebitdamargins",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "operatingmargins",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "financialcurrency",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "symbol",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "language",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "region",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "typedisp",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "quotesourcename",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "triggerable",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "name": "custompricealertconfidence",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "marketstate",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "fiftydayaveragechange",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "fiftydayaveragechangepercent",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "twohundreddayaveragechange",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "twohundreddayaveragechangepercent",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "sourceinterval",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "exchangedatadelayedby",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "averageanalystrating",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "cryptotradeable",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "name": "corporateactions",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": "string"
+        }
+      ]
+    },
+    {
+      "name": "regularmarkettime",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "regularmarketchangepercent",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "regularmarketprice",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "shortname",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "longname",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "exchange",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "messageboardid",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "exchangetimezonename",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "exchangetimezoneshortname",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "gmtoffsetmilliseconds",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "market",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "esgpopulated",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "name": "hasprepostmarketdata",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "name": "firsttradedatemilliseconds",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "regularmarketchange",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "regularmarketdayrange",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "fullexchangename",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "averagedailyvolume3month",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "fiftytwoweeklowchange",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "fiftytwoweeklowchangepercent",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "fiftytwoweekrange",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "fiftytwoweekhighchange",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "fiftytwoweekhighchangepercent",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "fiftytwoweekchangepercent",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "earningstimestamp",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "earningstimestampstart",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "earningstimestampend",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "earningscalltimestampstart",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "earningscalltimestampend",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "name": "isearningsdateestimate",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "name": "epstrailingtwelvemonths",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "epsforward",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "epscurrentyear",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "priceepscurrentyear",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "trailingpegratio",
+      "type": [
+        "null",
+        "double"
+      ]
+    }
+  ]
+}

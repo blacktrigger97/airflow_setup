@@ -1,179 +1,256 @@
 DEV:
-  Logging:
-    version: 1
-    disable_existing_loggers: False
-    incremental: False
-    formatters:
-      simple:
-        format: '[%(name)s|%(levelname)s|%(module)s|%(funcName)s|L%(lineno)d] %(asctime)s: %(message)s'
-        datefmt: '%Y-%m-%d-%H:%M:%S%z'
-      json:
-        (): utils.logger.jsonLogging.logJSONFormatter
-        fmt_keys:
-          run_id: run_id
-          jobtype: jobtype
-          level: levelname
-          message: message
-          logger: name
-          module: module
-          function: funcName
-          file: filename
-          line: lineno
-          timestamp: timestamp
-    handlers:
-      console:
-        class: logging.StreamHandler
-        level: INFO
-        formatter: simple
-        stream: ext://sys.stdout
-      # file_json:
-      #   class: logging.handlers.RotatingFileHandler
-      #   level: WARN
-      #   formatter: json
-      #   maxBytes: 104857600
-      #   filename: logs/
-      psgdb:
-        class: utils.logger.psgLogging.CustomHandler
-        level: ERROR
-      queue_listener:
-        class: utils.logger.QueueListenerHandler.QueueListenerHandler
+    Logging:
+        version: 1
+        disable_existing_loggers: False
+        incremental: False
+        formatters:
+            simple:
+                format: "[%(name)s|%(levelname)s|%(module)s|%(funcName)s|L%(lineno)d] %(asctime)s: %(message)s"
+                datefmt: "%Y-%m-%d-%H:%M:%S%z"
+            json:
+                (): utils.logger.jsonLogging.logJSONFormatter
+                fmt_keys:
+                    run_id: run_id
+                    jobtype: jobtype
+                    level: levelname
+                    message: message
+                    logger: name
+                    module: module
+                    function: funcName
+                    file: filename
+                    line: lineno
+                    timestamp: timestamp
         handlers:
-          - cfg://handlers.console
-          # - cfg://handlers.file_json
-          - cfg://handlers.psgdb
-    root:
-      level: NOTSET
-      handlers:
-        - queue_listener
+            console:
+                class: logging.StreamHandler
+                level: INFO
+                formatter: simple
+                stream: ext://sys.stdout
+            # file_json:
+            #   class: logging.handlers.RotatingFileHandler
+            #   level: WARN
+            #   formatter: json
+            #   maxBytes: 104857600
+            #   filename: logs/
+            psgdb:
+                class: utils.logger.psgLogging.PostgresLoggingHandler
+                level: ERROR
+            queue_listener:
+                class: utils.logger.QueueListenerHandler.QueueListenerHandler
+                handlers:
+                    - cfg://handlers.console
+                    # - cfg://handlers.file_json
+                    - cfg://handlers.psgdb
+        root:
+            level: NOTSET
+            handlers:
+                - queue_listener
 
+    Postgresql:
+        conf:
+            hostname: pgbouncer.bdc.home
+            port: 6432
+            username: cfgloghndlr
+            password: abcd1234
+            db: bdc
+        extra:
+            pool_min: 1
+            pool_max: 10
+        strategy: jdbc
+        opts:
 
-  Postgresql:
-    hostname: postgresql.bdc.home
-    port: 5432
-    username: root
-    password: abcd1234
-    db: bdc
-    schema: runlogs
-    table: logs
+    # Nessie:
+    #     conf:
+    #         url: http://nessie.bdc.home:19120/iceberg/main
+    #         warehouse: s3://warehouse
 
+    Polaris:
+        conf:
+            url: http://polaris.bdc.home:8181/api/catalog
+            oauth2-server-uri: http://polaris.bdc.home:8181/api/catalog/v1/oauth/tokens
+            warehouse: iceberg
+            realm: POLARIS
+            credential: root:abcd1234
 
-  Nessie:
-    conf:
-      url: http://nessie.bdc.home:19120/iceberg/main
-      warehouse: s3://warehouse
+    Minio:
+        conf:
+            endpoint: http://nginx-lb.bdc.home:9000
+            user: root
+            pass: abcd1234
+            region: us-east-1
 
+    Kafka:
+        kafka-broker-conf:
+            bootstrap.servers: kafka-1.bdc.home:29092,kafka-2.bdc.home:29092,kafka-3.bdc.home:29092
+            message.max.bytes: 1048576
+            compression.type: snappy
+            enable.idempotence: True
+            acks: all
+            max.in.flight.requests.per.connection: 3
+            retries: 5
+            delivery.timeout.ms: 12000
+            socket.timeout.ms: 10000
+            request.timeout.ms: 15000
+            linger.ms: 5
+            batch.size: 33554432
+        kafka-schema-client-conf:
+            url: http://kafka-sr.bdc.home:8081
+        schema:
+            avro: /schemas/avro/
+            json: /schemas/json/
 
-  Polaris:
-    conf:
-      url: http://polaris.bdc.home:8181/api/catalog
-      oauth2-server-uri: http://polaris.bdc.home:8181/api/catalog/v1/oauth/tokens
-      warehouse: iceberg
-      realm: POLARIS
-      credential: root:abcd1234
-      
+    SparkParam:
+        master: spark://sm.bdc.home:7077
+        common:
+            miniopath: s3://
+        resource:
+            KIP:
+                spark.executor.memory: 4g
+                spark.executor.cores: 2
+                spark.cores.max: 4
+                spark.driver.memory: 2g
+                spark.driver.cores: 1
+                spark.sql.shuffle.partitions: 9
+                spark.sql.session.timeZone: Asia/Kolkata
+            TEST:
+                spark.executor.memory: 1g
+                spark.executor.cores: 1
+                spark.cores.max: 1
+                spark.driver.memory: 1g
+                spark.driver.cores: 1
+                spark.sql.shuffle.partitions: 9
+                spark.sql.session.timeZone: Asia/Kolkata
 
+    Market:
+        Interval: 10
+        Symbols:
+            - RELIANCE
+            - TCS
+            - HDFCBANK
+            - INFY
+            - HINDUNILVR
+            - ICICIBANK
+            - KOTAKBANK
+            - SBIN
+            - LT
+            - AXISBANK
+            - TATSILV
 
-  Minio:
-    conf:
-      endpoint: http://nginx-lb.bdc.home:9000
-      user: admin
-      pass: abcd1234
-      region: us-east-1
+    NonStream:
+        common:
+        Opts:
+            path: archive/
+        File:
+            format: parquet
 
+    Streaming:
+        common:
+            triggering: 300 seconds
+            timeout: 360
+            checkpointLocation: tmp/kafka/
+        Opts:
+            fanout-enabled: True
+            path: archive/
+        File:
+            format: parquet
 
-  Kafka:
-    kafka-broker-conf:
-      bootstrap.servers: kafka-1.bdc.home:29092,kafka-2.bdc.home:29092,kafka-3.bdc.home:29092
-      message.max.bytes: 1048576
-      compression.type: snappy
-      enable.idempotence: True
-      acks: all
-      max.in.flight.requests.per.connection: 3
-      retries: 5
-      delivery.timeout.ms: 12000
-      socket.timeout.ms: 10000
-      request.timeout.ms: 15000
-      linger.ms: 5
-      batch.size: 33554432
-    kafka-schema-client-conf:
-      url: http://kafka-sr.bdc.home:8081
-    schema:
-      avro: /schemas/avro/
-      json: /schemas/json/
+    MultiSink:
+        common:
+        Opts:
+            path: archive/
+        File:
+            format: parquet
 
+    Yfinance:
+        appName: yfinance
+        dbName: yfinance
+        num_process: 5
 
-  SparkParam:
-    master: spark://sm.bdc.home:7077
-    common:
-      miniopath: s3://
-    resource:
-      spark.executor.memory: 4g
-      spark.executor.cores: 2
-      spark.cores.max: 4
-      spark.driver.memory: 2g
-      spark.driver.cores: 1
-      spark.sql.shuffle.partitions: 9
-      spark.sql.session.timeZone: Asia/Kolkata
+    TEST:
+        appName: TestETL
 
+    LOG-CTRL:
+        runlogs:
+            audit_logs:
+                columns:
+                    run_id: BIGINT PRIMARY KEY
+                    job_type: VARCHAR(50)
+                    layer: VARCHAR(50)
+                    stage: VARCHAR(50) NOT NULL
+                    message: TEXT
+                    status: VARCHAR(50) DEFAULT 'FAILED'
+                    log_ts: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                index: run_id
 
-  Market: 
-    Interval: 10
-    Symbols: 
-      - RELIANCE
-      - TCS
-      - HDFCBANK
-      - INFY
-      - HINDUNILVR
-      - ICICIBANK
-      - KOTAKBANK
-      - SBIN
-      - LT
-      - AXISBANK
-      - TATSILV
+            error_logs:
+                columns:
+                    run_id: BIGINT
+                    job_type: VARCHAR(50)
+                    layer: VARCHAR(50)
+                    stage: VARCHAR(50)
+                    error_message: TEXT
+                    log_ts: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                index: run_id
 
+            logs:
+                columns:
+                    run_id: BIGINT NOT NULL
+                    job_type: VARCHAR(50) NOT NULL
+                    level_name: VARCHAR(50) NOT NULL
+                    message: TEXT NOT NULL
+                    logger: VARCHAR(50) NOT NULL
+                    module: VARCHAR(50) NOT NULL
+                    function_name: VARCHAR(50) NOT NULL
+                    filename: VARCHAR(50) NOT NULL
+                    line_num: INTEGER NOT NULL
+                    log_time: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                index: run_id
 
-  NonStream:
-    common:
-      mode: append
-    Opts:
-      path: archive/
-    File:
-      format: parquet
+        controls:
+            control_tbl:
+                columns:
+                    id: UUID DEFAULT gen_random_uuid()
+                    job_type: VARCHAR(50) NOT NULL
+                    spark: VARCHAR(50) NOT NULL
+                    load_type: VARCHAR(50) NOT NULL
+                    target: VARCHAR(100) NOT NULL
+                    prim_keys: VARCHAR(100) NOT NULL
+                    loader: VARCHAR(50) NOT NULL
+                    wm_col: VARCHAR(50)
+                    scd_type: INTEGER
+                    wm_val: TIMESTAMP
+                    scd_dtl: JSONB
+                    wm_format: TEXT
+                    partcols: TEXT
+                    clusteredBy: TEXT
+                    trg_cols: TEXT
+                    source: TEXT
+                    is_active: BOOLEAN
+                add: PRIMARY KEY(source, target)
 
+            tbl_param:
+                columns:
+                    src_name: VARCHAR(50) PRIMARY KEY
+                    src_type: VARCHAR(50) NOT NULL
+                    extractor: VARCHAR(50) NOT NULL
+                    ldt: VARCHAR(50) NOT NULL
+                    src_cols: TEXT
 
-  Streaming:
-    common:
-      triggering: 300 seconds
-      mode: append
-      timeout: 360
-      checkpointLocation: tmp/kafka/
-    Opts:
-      fanout-enabled: True
-      path: archive/
-    File:
-      format: parquet
+            dq_checks:
+                columns:
+                    id: UUID DEFAULT gen_random_uuid()
+                    table_name: VARCHAR(100) NOT NULL
+                    column_name: TEXT
+                    rule_type: VARCHAR(50) NOT NULL
+                    rule_value: TEXT
+                    is_active: BOOLEAN NOT NULL
 
-
-  MultiSink:
-    common:
-      mode: append
-    Opts:
-      path: archive/
-    File:
-      format: parquet
-
-
-  JugaadData:
-    appName: jugaadData
-    dbName: jugaaddb
-    num_process: 5
-
-
-  Yfinance:
-    appName: yfinance
-    dbName: yfinance
-    num_process: 5
-
-  TestETL:
-    appName: testETL
-      
+            column_dt_map:
+                columns:
+                    id: UUID DEFAULT gen_random_uuid()
+                    table_name: VARCHAR(100) NOT NULL
+                    conv_type: VARCHAR(100) NOT NULL
+                    column_name: varchar(100) NOT NULL
+                    trg_data_type: VARCHAR(100) NOT NULL
+                    format: VARCHAR(100)
+                    is_active: BOOLEAN NOT NULL

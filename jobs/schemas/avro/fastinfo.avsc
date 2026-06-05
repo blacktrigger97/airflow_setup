@@ -1,7 +1,7 @@
 {
     "type" : "record",
     "name" : "fastinfo",
-    "fields" : [ 
+    "fields" : [
         {"name" : "currency", "type" : "string"},
         {"name" : "dayhigh", "type" : "double"},
         {"name" : "daylow", "type" : "double"},

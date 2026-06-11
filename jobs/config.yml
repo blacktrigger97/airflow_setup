@@ -225,7 +225,7 @@ DEV:
                     clusteredBy: TEXT
                     trg_cols: TEXT
                     source: TEXT
-                    is_active: BOOLEAN
+                    is_active: BOOLEAN NOT NULL
                 add: PRIMARY KEY(source, target)
 
             tbl_param:
@@ -235,6 +235,7 @@ DEV:
                     extractor: VARCHAR(50) NOT NULL
                     ldt: VARCHAR(50) NOT NULL
                     src_cols: TEXT
+                    is_active: BOOLEAN NOT NULL
 
             dq_checks:
                 columns:
